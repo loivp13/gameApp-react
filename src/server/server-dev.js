@@ -4,12 +4,17 @@ import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import config from "../../webpack.dev.config.js";
-
+import historyApiFallback from "connect-history-api-fallback";
 const app = express(),
   DIST_DIR = __dirname,
   HTML_FILE = path.join(DIST_DIR, "index.html"),
   compiler = webpack(config);
 
+app.use(
+  historyApiFallback({
+    verbose: false
+  })
+);
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
@@ -18,10 +23,9 @@ app.use(
 
 app.use(webpackHotMiddleware(compiler));
 
-app.get("/*", (req, res, next) => {
+app.get("*", (req, res, next) => {
   compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {
     if (err) {
-      console.log("====================================");
       return next(err);
     }
     res.set("content-type", "text/html");

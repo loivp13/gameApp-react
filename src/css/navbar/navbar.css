@@ -1,0 +1,16 @@
+#navBrand_Game {
+  margin-bottom: -11px;
+  text-decoration: underline;
+  font-size: 1.25em;
+}
+
+#navBrand_App {
+  font-size: 1.25em;
+}
+
+#navbarBrand {
+  bottom: 14px;
+  position: relative;
+  background-color: #000000;
+  padding: 5px 10px;
+}

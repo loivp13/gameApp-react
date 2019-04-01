@@ -8,6 +8,8 @@ import App from "./components/App";
 import reducers from "./components/App/redux/reducers";
 
 import "./css/style.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./fontawesome";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //eslint-disable-line no-undef
 
