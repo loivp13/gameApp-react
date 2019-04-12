@@ -20,6 +20,28 @@ export class App extends Component {
             <Route path="/" exact component={LandingPage} />
             <Route path="/login" component={Login} />
             <Route path="/userAccount" component={UserAccountPage} />
+            <Route
+              path="/github"
+              component={() => {
+                window.location = "https://github.com/loivp13";
+                return null;
+              }}
+            />
+            <Route
+              path="/linked"
+              component={() => {
+                window.location =
+                  "https://plus.google.com/u/0/115757859937195814229";
+                return null;
+              }}
+            />
+            <Route
+              path="/facebook"
+              component={() => {
+                window.location = "https://www.facebook.com/loi.pham.12";
+                return null;
+              }}
+            />
           </Switch>
           <Footer />
         </Router>

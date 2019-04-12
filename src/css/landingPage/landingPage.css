@@ -1,3 +1,8 @@
+#landingPageContainer {
+  border-top: #ff5154 5px solid !important;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
+}
 .about-us1 {
   font-weight: bold;
   font-size: 1.5em;
@@ -8,26 +13,28 @@
 }
 
 .landing_page_img {
-  width: 44em;
-  position: absolute;
-  bottom: -169px;
-  padding-top: 3px;
-  z-index: -1;
-  left: -35px;
-}
-
-.img-filler {
   width: 100%;
-  background-color: grey;
 }
-
-.AppBody {
-  border: 15px solid #e5e5e4;
-}
-
 #landingPageForm {
   padding: 15px 15px;
   border-radius: 5px;
-  background-color: #ededed !important;
+  background-color: #dddddd;
   box-shadow: 10px 10px 5px grey;
+}
+.landingPageFill {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  z-index: -2;
+  background-color: black;
+}
+@media only screen and (max-width: 720px) {
+  #landingPageForm {
+    bottom: -15px !important;
+    padding: 15px 15px;
+    border-radius: 5px;
+    background-color: #ededed !important;
+    box-shadow: 10px 10px 5px grey;
+  }
 }

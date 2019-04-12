@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   Collapse,
   Navbar,
@@ -32,11 +33,11 @@ export default class Header extends React.Component {
             </div>
           </NavbarBrand>
 
-          <div className="ml-auto mr-5 text-black game_deals">
+          <div className="ml-auto mr-5 text-dark game_deals d-md-none">
             Account
             <span className="ml-1">
               <FontAwesomeIcon
-                className="text-black"
+                className="text-dark"
                 icon={["fas", "user-circle"]}
               />
             </span>

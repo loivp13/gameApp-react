@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalSignUp from "../ModalSignUp";
 import {
   Col,
   Row,
@@ -12,8 +14,22 @@ import {
 
 export default class SignUp extends React.Component {
   render() {
+    const modal = () => {
+      return (
+        <FontAwesomeIcon
+          className="text-danger ml-1 mb-1"
+          icon={["fab", "google"]}
+          size="2x"
+        />
+      );
+    };
     return (
-      <Form id="landingPageForm">
+      <Form id="signUpForm">
+        <div className="row align-items-center m-auto pb-2">
+          <div className="h4 mr-auto">Sign up!</div>
+          <div className="h5">Sign in with</div>
+          <ModalSignUp buttonLabel={modal()} />
+        </div>
         <Row form>
           <Col md={6}>
             <FormGroup>
@@ -39,11 +55,11 @@ export default class SignUp extends React.Component {
           </Col>
         </Row>
         <FormGroup>
-          <Label for="exampleAddress">Name</Label>
+          <Label for="exampleName">Name</Label>
           <Input
             type="text"
             name="address"
-            id="exampleAddress"
+            id="exampleName"
             placeholder="First Name and Last Name"
           />
         </FormGroup>
@@ -76,7 +92,13 @@ export default class SignUp extends React.Component {
             </FormGroup>
           </Col>
         </Row>
-        <Button className="btn bg-info">Sign in </Button>
+        <div>
+          <Button className="btn btn-danger"> Sign Up</Button>
+          <div className="row">
+            <p className="pt-3">Already have an account?</p>
+            <ModalSignUp className="pt-3" buttonLabel="SignIn" />
+          </div>
+        </div>
       </Form>
     );
   }
