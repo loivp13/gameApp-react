@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export class UserMenuItems extends Component {
   render() {
-    return <Link>{this.props.link}</Link>;
+    return <Link to=''>{this.props.link}</Link>;
   }
 }
 

@@ -4,6 +4,7 @@ import { igdbKeys as API_KEY } from "../apiKeys/apiKeys";
 import BasicCollapse from "../BasicCollapse";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
 export class UserAccount extends Component {
   constructor(props) {
     super(props);
@@ -18,22 +19,22 @@ export class UserAccount extends Component {
   componentDidMount() {
     console.log("hi");
 
-    // axios({
-    //   url: "https://api-v3.igdb.com/characters",
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "user-key": API_KEY
-    //   },
-    //   data:
-    //     "fields akas,country_name,created_at,description,games,gender,mug_shot,name,people,slug,species,updated_at,url;"
-    // })
-    //   .then(response => {
-    //     console.log(response.data);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
+    axios({
+      url: "https://api-v3.igdb.com/characters",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "user-key": API_KEY
+      },
+      data:
+        "fields akas,country_name,created_at,description,games,gender,mug_shot,name,people,slug,species,updated_at,url;"
+    })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   toggle() {

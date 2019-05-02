@@ -5,6 +5,8 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import config from "../../webpack.dev.config.js";
 import historyApiFallback from "connect-history-api-fallback";
+import cors from 'cors';
+
 const app = express(),
   DIST_DIR = __dirname,
   HTML_FILE = path.join(DIST_DIR, "index.html"),
@@ -15,6 +17,9 @@ app.use(
     verbose: false
   })
 );
+
+app.use(cors())
+
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
