@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
-import test from "./test";
+import showPageReducer from "./showPageReducer";
 
 export default combineReducers({
   form: formReducer,
-  test: test
+  currentShowPage: showPageReducer
 });

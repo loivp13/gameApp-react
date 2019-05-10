@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import UserMenuItem from "./UserMenuItems";
+import { Button, ButtonGroup } from  'reactstrap';
+import { connect } from "react-redux";
+import { selectShowPage } from '../redux/actions';
 
 export class UserMenu extends Component {
   constructor(props) {
@@ -9,6 +11,11 @@ export class UserMenu extends Component {
       imageSrc:
         "https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_client_male_person_user_work_sport_beard_team_glasses-512.png"
     };
+
+    this.handleSelect = (page) => {
+      console.log(page)
+      this.props.selectShowPage(page)
+    }
   }
 
   render() {
@@ -37,21 +44,13 @@ export class UserMenu extends Component {
 
         <div className="row justify-content-center">
           <div className="list-group border-dark">
-            <div className="list-group-item-actions">
-              <UserMenuItem link={"Browse"} />
-            </div>
-            <div className="list-group-item-actions">
-              <UserMenuItem link={"Sell"} />
-            </div>
-            <div className="list-group-item-actions">
-              <UserMenuItem link={"Wish List"} />
-            </div>
-            <div className="list-group-item-actions">
-              <UserMenuItem link={"Setting"} />
-            </div>
-            <div className="list-group-item-actions">
-              <UserMenuItem link={"Trade"} />
-            </div>
+            <ButtonGroup vertical>
+              <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Browse')}} outline>Browse</Button>
+              <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Sell')}} outline>Sell</Button>
+              <Button size='lg' color='primary' onClick={() =>{this.handleSelect('WishList')}} outline>WishList</Button>
+              <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Trade')}} outline>Trade</Button>
+              <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Setting')}} outline>Setting</Button>
+            </ButtonGroup>
           </div>
         </div>
       </div>
@@ -59,4 +58,4 @@ export class UserMenu extends Component {
   }
 }
 
-export default UserMenu;
+export default connect(null,{selectShowPage})(UserMenu);

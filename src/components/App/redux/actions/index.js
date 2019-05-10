@@ -1,8 +1,6 @@
-import Types from "./Types";
 
-export const Test = () => {
+export const selectShowPage = (page) => {
   return {
-    type: Types.test,
-    payload: "hi"
+    type: page,
   };
 };

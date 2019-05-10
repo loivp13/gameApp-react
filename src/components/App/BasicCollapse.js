@@ -14,7 +14,6 @@ class BasicCollapse extends Component {
     const style = {
       position: "absolute"
     };
-    console.log(this.props);
     return (
       <div>
         <Button

@@ -1,3 +1,7 @@
 export const Types = {
-  test: "TEST"
+  Browse: 'Browse',
+  Sell: 'Sell',
+  WishList: 'WishList',
+  Setting: 'Setting',
+  Trade: 'Trade'
 };

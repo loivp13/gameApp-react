@@ -1,11 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-
 module.exports = {
   entry: {
     main: [
-      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
+      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&quiet=true",
       "./src/index.js"
     ]
   },
@@ -57,7 +56,21 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy:{
+      '/games': {
+        target:'https://api-v3.igdb.com',
+        onProxyRes: function (proxyRes, req, res){
+          proxyRes.headers['Access-Control-Allow-Origin'] = '*'
+        },
+        changeOrigin: true,
+        ws:false
+      },
+      '/todos/1': {
+        target: 'https://jsonplaceholder.typicode.com',
+        changeOrigin: true
+      }
+    }
   },
   plugins: [
     new HtmlWebPackPlugin({

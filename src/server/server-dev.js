@@ -6,11 +6,20 @@ import webpackHotMiddleware from "webpack-hot-middleware";
 import config from "../../webpack.dev.config.js";
 import historyApiFallback from "connect-history-api-fallback";
 import cors from 'cors';
-
+import proxy from 'http-proxy-middleware';
 const app = express(),
   DIST_DIR = __dirname,
   HTML_FILE = path.join(DIST_DIR, "index.html"),
-  compiler = webpack(config);
+  compiler = webpack(config),
+  devServerProxy = config.devServer.proxy;
+
+app.use(cors());
+
+if(devServerProxy){
+  Object.keys(devServerProxy).forEach( context => {
+    return  app.use(proxy(context, devServerProxy[context]))
+  })
+}
 
 app.use(
   historyApiFallback({
@@ -18,14 +27,11 @@ app.use(
   })
 );
 
-app.use(cors())
-
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
   })
-);
-
+)
 app.use(webpackHotMiddleware(compiler));
 
 app.get("*", (req, res, next) => {
