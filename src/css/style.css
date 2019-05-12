@@ -3,6 +3,7 @@
 @import "./footer.css";
 @import "./signUp.css";
 @import url("https://fonts.googleapis.com/css?family=Oswald");
+@import "./cards.css"
 
 body {
   font-family: "Oswald", sans-serif !important;

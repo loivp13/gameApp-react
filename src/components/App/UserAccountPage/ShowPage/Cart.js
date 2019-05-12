@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export class Setting extends Component {
- render() {
+export class Cart extends Component {
+  render() {
     return (
       <div>
-        Setting
+        Cart
       </div>
     )
   }
 }
 
-export default Setting
+export default Cart

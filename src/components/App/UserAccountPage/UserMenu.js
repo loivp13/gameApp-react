@@ -50,6 +50,7 @@ export class UserMenu extends Component {
               <Button size='lg' color='primary' onClick={() =>{this.handleSelect('WishList')}} outline>WishList</Button>
               <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Trade')}} outline>Trade</Button>
               <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Setting')}} outline>Setting</Button>
+              <Button size='lg' color='primary' onClick={() =>{this.handleSelect('Cart')}} outline>Cart</Button>
             </ButtonGroup>
           </div>
         </div>

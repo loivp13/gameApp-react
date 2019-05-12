@@ -5,6 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import API_KEY from '../apiKeys/apiKeys';
 import { connect } from "react-redux";
 import { selectShowPage } from "../redux/actions";
+import Browse from "./ShowPage/Browse";
+import Sell from "./ShowPage/Sell";
+import WishList from "./ShowPage/WishList";
+import Trade from "./ShowPage/Trade";
+import Setting from "./ShowPage/Setting";
+import Cart from "./ShowPage/Cart";
 
 
 export class UserAccount extends Component {
@@ -50,15 +56,34 @@ export class UserAccount extends Component {
       );
     };
 
+    const renderCurrentPage = () => {
+      switch(this.props.currentPage){
+        case "Browse":
+          return <Browse></Browse>
+        case "Sell":
+          return <Sell></Sell>
+        case "Wish List":
+          return <WishList></WishList>
+        case "Trade":
+          return <Trade></Trade>
+        case "Setting":
+          return <Setting></Setting>
+        case 'Cart':
+          return <Cart></Cart>
+        default :
+          return null;
+      }
+    }
+
     //if true take up more space else less space
     const BasicCollapseStyle = this.state.collapse
-      ? "col-12 col-md-6"
-      : "col-12 col-md-2";
-    const ShowStyle = this.state.collapse ? "col-6" : "col-10";
+      ? "col-12 col-md-4 "
+      : "col-12 col-md-2 ";
+    const ShowStyle = this.state.collapse ? "col-7" : "col-10";
     return (
       <div>
-        <div className="row">
-          <div className={BasicCollapseStyle}>
+        <div className="row justify-content-around">
+          <div id='basicCollapse' className={BasicCollapseStyle}>
             <BasicCollapse
               username={this.state.username}
               buttonIcon={openIcon}
@@ -66,7 +91,7 @@ export class UserAccount extends Component {
               collapse={this.state.collapse}
             />
           </div>
-          <div className={ShowStyle}>{this.props.currentPage}</div>
+          <div className={ShowStyle}>{renderCurrentPage()}</div>
         </div>
       </div>
     );

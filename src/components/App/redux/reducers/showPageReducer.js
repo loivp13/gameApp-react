@@ -12,6 +12,8 @@ export default (state = {currentPage : 'Browse'}, action) => {
       return {...state, currentPage: 'Setting'}
     case Types.Trade:
       return {...state, currentPage: 'Trade'}
+    case Types.Cart:
+      return{...state, currentPage: 'Cart'}
     default:
       return state
   }

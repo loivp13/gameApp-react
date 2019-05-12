@@ -3,5 +3,6 @@ export const Types = {
   Sell: 'Sell',
   WishList: 'WishList',
   Setting: 'Setting',
-  Trade: 'Trade'
-};
+  Trade: 'Trade',
+  Cart: 'Cart'
+}

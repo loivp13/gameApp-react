@@ -4,9 +4,9 @@ import { InputGroup, InputGroupText, InputGroupAddon, Input } from "reactstrap";
 export const InputUtility = () => {
   return (
     <React.Fragment>
-      <InputGroup>
+      <InputGroup className='border border-dark rounded'>
         <InputGroupAddon addonType="prepend">
-          <InputGroupText>Search</InputGroupText>
+          <InputGroupText className='bg-white'>Search</InputGroupText>
         </InputGroupAddon>
         <Input />
       </InputGroup>

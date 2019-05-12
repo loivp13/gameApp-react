@@ -23,7 +23,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md" className="">
+        <Navbar color="dark" light expand="md" className="mb-4">
           <NavbarBrand href="/" id="navbarBrand" className="ml-5">
             <div id="navBrand_Game" className="text-white">
               Game
