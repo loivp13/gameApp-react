@@ -73,21 +73,36 @@ export class WishList extends Component {
   render() {
     const renderCards = () => {
       return this.state.cardData.map(data => {
+        const browseColumnStyle = () => {
+          console.log(this.props.collapse);
+          return this.props.collapse
+            ? "col-10 col-sm-5 col-md-3 col-lg-3"
+            : "col-10 col-sm-5 col-md-4 col-lg-2";
+        };
         return (
-          <div className="col-3 text-center border border-dark pt-3 bg-light">
+          <div
+            className={`${browseColumnStyle()} text-center border rounded border-dark pt-3 bg-light mr-1 ml-4 mt-1`}
+          >
             <CardImg top width="100%" src={this.state.cardData[0].imageURL} />
             <CardHeader>{this.state.cardData[0].title}</CardHeader>
             <CardFooter>
               {this.state.cardData[0].price} {this.state.cardData[0].location}{" "}
             </CardFooter>
             <ButtonGroup className="mb-2">
-              <Button>wishList</Button>
-              <Button>Cart</Button>
+              <div className="row">
+                <Button className="col-6" color="primary">
+                  wishList
+                </Button>
+                <Button className="col-6" color="primary">
+                  Cart
+                </Button>
+              </div>
             </ButtonGroup>
           </div>
         );
       });
     };
+
     return (
       <div>
         <div className="row border border-dark">

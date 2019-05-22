@@ -5,3 +5,6 @@ dist
 
 Coverage
 coverage
+
+.env
+.env.development

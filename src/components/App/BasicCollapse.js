@@ -9,40 +9,48 @@ class BasicCollapse extends Component {
   }
 
   render() {
-    const floatDirection = this.props.collapse ? "d-none" : "float-right";
+    const floatDirection = this.props.collapse ? "d-none" : "";
 
     const style = {
-      position: "absolute"
+      position: ""
     };
     return (
-      <div>
+      <React.Fragment>
         <Button
+          size="sm"
           className={floatDirection}
-          color="white"
+          color="blue"
           onClick={this.props.onToggle}
           style={{ style }}
         >
           {this.props.buttonIcon()}
         </Button>
         <Collapse isOpen={this.props.collapse}>
-          <div className="row bg-primary rounded">
+          <div
+            id="collapse-container"
+            className="row rounded collapse-container border boder-dark pb-4"
+          >
             <div className="col-12">
               <Button
                 className="float-right"
                 onClick={this.props.onToggle}
-                color="primary"
+                color=""
               >
                 <FontAwesomeIcon icon={["far", "times-circle"]} />
               </Button>
             </div>
-            <div className="col-10 pr-0">
-              <Card onToggle={this.props.onToggle}>
+            <div className="col-10 pr-0 pb-3">
+              <Card
+                id="user_menu_container"
+                className="pb-3"
+                onToggle={this.props.onToggle}
+              >
                 <UserMenu onToggle={this.props.onToggle} />
               </Card>
             </div>
           </div>
         </Collapse>
-      </div>
+      </React.Fragment>
     );
   }
 }

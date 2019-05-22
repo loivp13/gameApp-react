@@ -7,7 +7,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "buildDev": "rm -rf dist && webpack --mode development --config webpack.server.config.js && webpack --mode development --config webpack.dev.config.js",
-    "buildProd": "rm -rf dist && webpack --mode production --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",
+    "buildProd": "rm -rf dist && webpack --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",
     "start": "node ./dist/server.js"
   },
   "repository": "https://github.com/bengrunfeld/rexpack",
@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-brands-svg-icons": "^5.8.1",
     "@fortawesome/free-regular-svg-icons": "^5.8.1",
@@ -23,6 +24,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "cors": "^2.8.5",
+    "dotenv-webpack": "^1.7.0",
     "express": "^4.16.4",
     "igdb-api-node": "^3.1.7",
     "lodash": "^4.17.11",
@@ -54,6 +56,7 @@
     "babel-loader": "^8.0.0",
     "connect-history-api-fallback": "^1.6.0",
     "css-loader": "^0.28.11",
+    "dotenv": "^8.0.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^5.14.1",

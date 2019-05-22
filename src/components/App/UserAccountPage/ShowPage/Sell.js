@@ -28,7 +28,7 @@ export class Sell extends Component {
       <div className="container col-8 mt-5 bg-secondary p-4 rounded">
         <Form id="signUpForm">
           <div className="row align-items-center m-auto pb-2">
-            <div className="h4 mr-auto">Trade in your games!</div>
+            <div className="h4 mr-auto">Sell your games!</div>
           </div>
           <Row form>
             <Col md={6}>

@@ -3,7 +3,6 @@
 @import "./footer.css";
 @import "./signUp.css";
 @import url("https://fonts.googleapis.com/css?family=Oswald");
-@import "./cards.css"
 
 body {
   font-family: "Oswald", sans-serif !important;
@@ -12,4 +11,28 @@ body {
 
 .AppBody {
   border: 15px solid #e5e5e4;
+}
+
+.collapse-container {
+  margin-top: 50px;
+  height: 75%;
+  margin-bottom: 2em;
+}
+
+.shopping_cart_image {
+  max-width: 4em;
+}
+
+#collapse-container {
+  border: solid 2px black !important;
+  box-shadow: 5px 10px #888888;
+}
+
+#user_menu_container {
+  border: solid 1px black !important;
+  box-shadow: 5px 10px #888888;
+}
+
+#browse_container {
+  border: solid 2px black !important;
 }

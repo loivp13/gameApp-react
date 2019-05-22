@@ -1,6 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const url = require("url");
+const Dotenv = require("dotenv-webpack");
 module.exports = {
   entry: {
     main: [
@@ -57,18 +59,30 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    proxy:{
-      '/games': {
-        target:'https://api-v3.igdb.com',
-        onProxyRes: function (proxyRes, req, res){
-          proxyRes.headers['Access-Control-Allow-Origin'] = '*'
-        },
+    proxy: {
+      "/search": {
+        target: "https://api-v3.igdb.com",
+        ws: false,
         changeOrigin: true,
-        ws:false
+        logLevel: "debug",
+        onProxyRes: function(proxyRes, req, res) {
+          proxyRes.headers["Allow-Access-Control-Origin"] = "*";
+        },
+        onProxyReq: function(proxyReq, req, res) {
+          proxyReq.setHeader("Allow-Access-Control-Origin", "*");
+        }
       },
-      '/todos/1': {
-        target: 'https://jsonplaceholder.typicode.com',
-        changeOrigin: true
+      "/games": {
+        target: "https://api-v3.igdb.com",
+        ws: false,
+        changeOrigin: true,
+        logLevel: "debug",
+        onProxyRes: function(proxyRes, req, res) {
+          proxyRes.headers["Allow-Access-Control-Origin"] = "*";
+        },
+        onProxyReq: function(proxyReq, req, res) {
+          proxyReq.setHeader("Allow-Access-Control-Origin", "*");
+        }
       }
     }
   },
@@ -79,6 +93,13 @@ module.exports = {
       excludeChunks: ["server"]
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new Dotenv({
+      path: ".env.development", // load this now instead of the ones in '.env'
+      safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+      systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+      silent: true, // hide any errors
+      defaults: false // load '.env.defaults' as the default values if empty.
+    })
   ]
 };

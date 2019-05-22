@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
 import BasicCollapse from "../BasicCollapse";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import API_KEY from '../apiKeys/apiKeys';
 import { connect } from "react-redux";
 import { selectShowPage } from "../redux/actions";
 import Browse from "./ShowPage/Browse";
@@ -12,36 +10,18 @@ import Trade from "./ShowPage/Trade";
 import Setting from "./ShowPage/Setting";
 import Cart from "./ShowPage/Cart";
 
-
 export class UserAccount extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       username: null || "realUsername",
-      collapse: true,
+      collapse: true
     };
 
     this.toggle = this.toggle.bind(this);
   }
-  componentDidMount() {
-    // console.log(this.state)
-    // axios({
-    //   url: "/games",
-    //   method: "POST",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'user-key': API_KEY.IgdbKeys
-    //   },
-    //   data: 'fields name,popularity; sort popularity desc;'
-    // })
-    //   .then(response => {
-    //     console.log(response.data);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
-  }
+  componentDidMount() {}
 
   toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
@@ -50,40 +30,42 @@ export class UserAccount extends Component {
   render() {
     const openIcon = () => {
       return (
-        <div className="btn btn-success">
+        <div className="btn">
           <FontAwesomeIcon icon={["fas", "expand-arrows-alt"]} />
         </div>
       );
     };
 
     const renderCurrentPage = () => {
-      switch(this.props.currentPage){
+      switch (this.props.currentPage) {
         case "Browse":
-          return <Browse></Browse>
+          return <Browse collapse={this.state.collapse} />;
         case "Sell":
-          return <Sell></Sell>
+          return <Sell />;
         case "Wish List":
-          return <WishList></WishList>
+          return <WishList collapse={this.state.collapse} />;
         case "Trade":
-          return <Trade></Trade>
+          return <Trade />;
         case "Setting":
-          return <Setting></Setting>
-        case 'Cart':
-          return <Cart></Cart>
-        default :
+          return <Setting />;
+        case "Cart":
+          return <Cart collapse={this.state.collapse} />;
+        default:
           return null;
       }
-    }
+    };
 
     //if true take up more space else less space
     const BasicCollapseStyle = this.state.collapse
       ? "col-12 col-md-4 "
-      : "col-12 col-md-2 ";
-    const ShowStyle = this.state.collapse ? "col-7" : "col-10";
+      : "col-3 col-md-2";
+    const ShowStyle = this.state.collapse
+      ? "col-10 col-md-7 "
+      : "col-10 col-lg-10";
     return (
-      <div>
+      <div className="main_container">
         <div className="row justify-content-around">
-          <div id='basicCollapse' className={BasicCollapseStyle}>
+          <div id="basicCollapse" className={BasicCollapseStyle}>
             <BasicCollapse
               username={this.state.username}
               buttonIcon={openIcon}
@@ -100,7 +82,10 @@ export class UserAccount extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     currentPage: state.currentShowPage.currentPage
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps,  {selectShowPage}) (UserAccount);
+export default connect(
+  mapStateToProps,
+  { selectShowPage }
+)(UserAccount);

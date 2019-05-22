@@ -1,6 +1,6 @@
 import { Types } from "../actions/Types";
 
-export default (state = { currentPage: "Wish List" }, action) => {
+export default (state = { currentPage: "Browse" }, action) => {
   switch (action.type) {
     case Types.Browse:
       return { ...state, currentPage: "Browse" };
