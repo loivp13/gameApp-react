@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import InputUtility from "../../UtilitiesComponents/InputUtility";
+import { connect } from "react-redux";
 import {
   Card,
   Button,
@@ -13,97 +14,65 @@ import {
   CardHeader,
   CardFooter
 } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class Browse extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cardData: [
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        },
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        },
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        },
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        },
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        },
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        },
-        {
-          imageURL:
-            "https://i5.walmartimages.com/asr/8b9148da-b519-4eb1-8d7a-81f18e3f37c1_1.6dcfeddc8ca5a562185364d8a28288e7.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF",
-          title: "title",
-          location: "location",
-          price: 45
-        }
-      ]
-    };
+    this.state = {};
   }
 
   render() {
     const renderCards = () => {
-      return this.state.cardData.map(data => {
-        const browseColumnStyle = () => {
-          console.log(this.props.collapse);
-          return this.props.collapse
-            ? "col-10 col-sm-5 col-md-3 col-lg-3"
-            : "col-10 col-sm-5 col-md-4 col-lg-2";
-        };
-        return (
-          <div
-            key={Math.random() * 10000000}
-            className={`${browseColumnStyle()} text-center border rounded border-dark pt-3 bg-light mr-1 ml-4 mt-1`}
-          >
-            <CardImg top width="100%" src={this.state.cardData[0].imageURL} />
-            <CardHeader>{this.state.cardData[0].title}</CardHeader>
-            <CardFooter>
-              {this.state.cardData[0].price} {this.state.cardData[0].location}{" "}
-            </CardFooter>
-            <ButtonGroup className="mb-2">
-              <div className="row">
-                <Button className="col-6" color="primary">
-                  wishList
-                </Button>
-                <Button className="col-6" color="primary">
-                  Cart
-                </Button>
+      let { apiSearchResponse } = this.props;
+      return apiSearchResponse
+        ? apiSearchResponse.map(data => {
+            const browseColumnStyle = () => {
+              return this.props.collapse
+                ? "col-10 col-sm-5 col-md-3 col-lg-3"
+                : "col-10 col-sm-5 col-md-4 col-lg-2";
+            };
+            console.log(data);
+            let checkForCoverArt = () => {
+              if (data.cover) {
+                return data.cover.url;
+              } else {
+                return "https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fuh.edu%2Fpharmacy%2F_images%2Fdirectory-staff%2Fno-image-available.jpg&f=1";
+              }
+            };
+            return (
+              <div
+                key={data.id}
+                className={`${browseColumnStyle()} text-center border rounded border-dark pt-3 bg-light mr-1 ml-4 mt-1`}
+              >
+                <Card>
+                  <CardImg top width="100%" src={checkForCoverArt()} />
+                  <CardHeader>{data.name}</CardHeader>
+                  <CardFooter>
+                    <div className="row">
+                      <a className="col-4" color="danger">
+                        <FontAwesomeIcon
+                          className="text-danger"
+                          icon={["fas", "heart"]}
+                        />
+                      </a>
+
+                      <a className="col-" color="primary">
+                        <FontAwesomeIcon
+                          className="text-primary"
+                          icon={["fas", "cart-plus"]}
+                        />
+                      </a>
+                      <div className="browse_price ml-2">
+                        {((data.popularity / 20) * 60).toFixed(2)}
+                      </div>
+                    </div>
+                  </CardFooter>
+                </Card>
               </div>
-            </ButtonGroup>
-          </div>
-        );
-      });
+            );
+          })
+        : null;
     };
     return (
       <div>
@@ -120,5 +89,9 @@ export class Browse extends Component {
     );
   }
 }
-
-export default Browse;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    apiSearchResponse: state.apiSearchResponse
+  };
+};
+export default connect(mapStateToProps)(Browse);

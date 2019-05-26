@@ -1,6 +1,12 @@
-
-export const selectShowPage = (page) => {
+export const selectShowPage = page => {
   return {
-    type: page,
+    type: page
+  };
+};
+
+export const searchTerm = (term, apiResponse) => {
+  return {
+    type: term,
+    payload: apiResponse
   };
 };

@@ -2,6 +2,9 @@ import React from "react";
 import { InputGroup, Button, InputGroupAddon, Input } from "reactstrap";
 import API_KEY from "../apiKeys/apiKeys";
 import axios from "axios";
+import { searchTerm } from "../redux/actions";
+import { connect } from "react-redux";
+import { Types } from "../redux/actions/Types";
 
 class InputUtility extends React.Component {
   constructor(props) {
@@ -12,33 +15,17 @@ class InputUtility extends React.Component {
   }
 
   handleSearchClick = term => {
+    let ageRating = [];
     axios({
-      url:
-        process.env.API_URL === "dev" ? "/search" : "https://api-v3.igdb.com",
+      url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
       method: "POST",
       headers: {
         ["user-key"]: API_KEY.igdb
       },
-      data:
-        "fields alternative_name,character,collection,company,description,game,name,person,platform,popularity,published_at,test_dummy,theme;"
+      data: `search "${term}"; limit 50; fields name, genres.name, platforms.abbreviation, popularity, rating, rating_count, cover.url, similar_games.name ;`
     })
       .then(response => {
-        console.log(response.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-
-    axios({
-      url: "/games",
-      method: "POST",
-      headers: {
-        ["user-key"]: API_KEY.igdb
-      },
-      data: `fields name, involved_companies; search "Halo";`
-    })
-      .then(response => {
-        console.log(response.data);
+        this.props.searchTerm(Types.SearchTerm, response.data);
       })
       .catch(err => {
         console.error(err);
@@ -46,7 +33,6 @@ class InputUtility extends React.Component {
   };
 
   render() {
-    console.log(process.env);
     return (
       <InputGroup className="border border-dark rounded">
         <InputGroupAddon addonType="prepend">
@@ -70,4 +56,7 @@ class InputUtility extends React.Component {
   }
 }
 
-export default InputUtility;
+export default connect(
+  null,
+  { searchTerm }
+)(InputUtility);

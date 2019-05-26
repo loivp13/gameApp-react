@@ -1,26 +1,19 @@
 import React from "react";
+import App from "./components/App";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
-import reduxThunk from "redux-thunk";
-
-import App from "./components/App";
-import reducers from "./components/App/redux/reducers";
+import { PersistGate } from "redux-persist/integration/react";
+import persistedStore from "./store";
 
 import "./css/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./fontawesome";
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //eslint-disable-line no-undef
-
-const store = createStore(
-  reducers,
-  composeEnhancer(applyMiddleware(reduxThunk))
-);
-
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
+  <Provider store={persistedStore().store}>
+    <PersistGate loading={null} persistor={persistedStore().persistors}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("react-container") // eslint-disable-line no-undef
 );

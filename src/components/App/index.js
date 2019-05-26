@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { searchTerm } from "./redux/actions/index";
+import { Types } from "./redux/actions/Types";
+import { connect } from "react-redux";
+import axios from "axios";
+import API_KEY from "./apiKeys/apiKeys";
 
 import Footer from "./Footer";
 import LandingPage from "./LandingPage";
@@ -11,6 +16,29 @@ import UserAccountPage from "./UserAccountPage";
 const history = createBrowserHistory();
 
 export class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    if (!this.props.apiSearchResponse)
+      axios({
+        url:
+          process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
+        method: "POST",
+        headers: {
+          ["user-key"]: API_KEY.igdb
+        },
+        data: `limit 50; fields name, genres.name, platforms.abbreviation, popularity, rating, rating_count, cover.url, similar_games.* ;`
+      })
+        .then(response => {
+          this.props.searchTerm(Types.SearchTerm, response.data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+  }
+
   render() {
     return (
       <div className="container AppBody">
@@ -50,4 +78,13 @@ export class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    apiSearchResponse: state.apiSearchReponse
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { searchTerm }
+)(App);
