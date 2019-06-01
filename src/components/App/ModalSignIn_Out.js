@@ -17,7 +17,6 @@ import {
 import { connect } from "react-redux";
 import { signIn, signOut } from "./redux/actions";
 import { withRouter } from "react-router-dom";
-
 class ModalSignIn_Out extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +25,12 @@ class ModalSignIn_Out extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   componentDidMount() {
@@ -39,21 +44,28 @@ class ModalSignIn_Out extends React.Component {
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.onAuthChange(this.auth.isSignedIn.get());
+          this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
   }
-
-  toggle() {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }));
-  }
-
-  handleSignOutClick = async () => {
-    this.auth.signOut();
-    await this.props.signOut();
-    this.props.history.push("/");
+  onSignInClick = () => {
+    this.auth.signIn();
   };
+
+  onSignOutClick = () => {
+    this.auth.signOut();
+  };
+
+  onAuthChange = isSignedIn => {
+    if (isSignedIn) {
+      this.props.signIn(this.auth.currentUser.get().getId());
+      this.props.history.push("/userAccount");
+    } else {
+      this.props.signOut();
+      this.props.history.push("/");
+    }
+  };
+
   render() {
     let renderLogin_Out = () => {
       if (this.props.buttonLabel === "Sign Out") {
@@ -62,7 +74,7 @@ class ModalSignIn_Out extends React.Component {
             className={`pt-3 ml-1 ${
               this.props.buttonColor
             } modal_label_animation grow`}
-            onClick={this.handleSignOutClick}
+            onClick={this.onSignOutClick}
           >
             {this.props.buttonLabel}
           </p>
@@ -135,8 +147,7 @@ class ModalSignIn_Out extends React.Component {
 }
 let mapStateToProps = (state, ownProps) => {
   return {
-    isSignedIn: state.auth.isSignedIn,
-    authObject: state.auth.authObject
+    isSignedIn: state.auth.isSignedIn
   };
 };
 

@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { signIn, signOut, authObject } from "./redux/actions";
+import { signIn, signOut } from "./redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { withRouter } from "react-router-dom";
 
 class GoogleAuth extends React.Component {
   componentDidMount() {
@@ -23,8 +24,10 @@ class GoogleAuth extends React.Component {
   onAuthChange = isSignedIn => {
     if (isSignedIn) {
       this.props.signIn(this.auth.currentUser.get().getId());
+      this.props.history.push("/userAccount");
     } else {
       this.props.signOut();
+      this.props.history.push("/");
     }
   };
 
@@ -66,7 +69,9 @@ const mapStateToProps = state => {
   return { isSignedIn: state.auth.isSignedIn };
 };
 
-export default connect(
-  mapStateToProps,
-  { signIn, signOut, authObject }
-)(GoogleAuth);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { signIn, signOut }
+  )(GoogleAuth)
+);

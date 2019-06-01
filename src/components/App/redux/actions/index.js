@@ -24,10 +24,3 @@ export const signOut = () => {
     type: "SignOut"
   };
 };
-
-export const authObject = object => {
-  return {
-    type: "AuthObject",
-    payload: object
-  };
-};
