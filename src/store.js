@@ -12,11 +12,11 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //eslint-disable-line no-undef
 
-export default () => {
+export default (() => {
   let store = createStore(
     persistedReducer,
     composeEnhancer(applyMiddleware(reduxThunk))
   );
   let persistors = persistStore(store);
   return { store, persistors };
-};
+})();

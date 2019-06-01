@@ -20,7 +20,7 @@ export class Sell extends Component {
   }
 
   componentDidMount() {
-    this.setState({ location: "springfiled" });
+    this.setState({ location: "springfield" });
   }
 
   render() {

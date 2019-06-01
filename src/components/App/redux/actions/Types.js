@@ -5,5 +5,9 @@ export const Types = {
   Setting: "Setting",
   Trade: "Trade",
   Cart: "Cart",
-  SearchTerm: "SearchTerm"
+  SearchTerm: "SearchTerm",
+  SignIn: "SignIn",
+  SignOut: "SignOut",
+  Purge: "Purge",
+  AuthObject: "AuthObject"
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalSignUp from "../ModalSignUp";
+import ModalSignIn from "../ModalSignIn_Out";
+import GoogleAuth from "../GoogleAuth";
 import {
   Col,
   Row,
@@ -11,8 +12,33 @@ import {
   Input,
   FormText
 } from "reactstrap";
+import { Field, reduxForm } from "redux-form";
 
-export default class SignUp extends React.Component {
+export class SignUp extends React.Component {
+  renderInput = ({ input, label, meta }) => {
+    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+    return (
+      <div className={className}>
+        <Label>{label}</Label>
+        <Input {...input} autoComplete="off" />
+        {this.renderError(meta)}
+      </div>
+    );
+  };
+
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="text-danger">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+  }
+
+  onSubmit = formValues => {
+    this.props.onSubmit(formValues);
+  };
   render() {
     const modal = () => {
       return (
@@ -24,82 +50,111 @@ export default class SignUp extends React.Component {
       );
     };
     return (
-      <Form id="signUpForm">
+      <Form onSubmit={this.props.handleSubmit(this.onSubmit)} id="signUpForm">
         <div className="row align-items-center m-auto pb-2">
           <div className="h4 mr-auto">Sign up!</div>
           <div className="h5">Sign in with</div>
-          <ModalSignUp buttonLabel={modal()} />
+          <GoogleAuth />
         </div>
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Label for="exampleEmail">Email</Label>
-              <Input
-                type="email"
+              <Field
                 name="email"
-                id="exampleEmail"
-                placeholder="Email"
+                component={this.renderInput}
+                label="Enter Email"
               />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input
-                type="password"
+              <Field
                 name="password"
-                id="examplePassword"
-                placeholder="Password "
+                component={this.renderInput}
+                label="Enter password"
               />
             </FormGroup>
           </Col>
         </Row>
         <FormGroup>
-          <Label for="exampleName">Name</Label>
-          <Input
-            type="text"
-            name="address"
-            id="exampleName"
-            placeholder="First Name and Last Name"
+          <Field
+            name="name"
+            component={this.renderInput}
+            label="First Name and Last Name"
           />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleAddress2">Address</Label>
-          <Input
-            type="text"
-            name="address"
-            id="exampleAddress"
-            placeholder="Apartment, studio, or floor"
-          />
+          <Field name="address" component={this.renderInput} label="Address" />
         </FormGroup>
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Label for="exampleCity">City</Label>
-              <Input type="text" name="city" id="exampleCity" />
+              <Field name="city" component={this.renderInput} label="City" />
             </FormGroup>
           </Col>
-          <Col md={4}>
+          <Col md={3}>
             <FormGroup>
-              <Label for="exampleState">State</Label>
-              <Input type="text" name="state" id="exampleState" />
+              <Field name="state" component={this.renderInput} label="State" />
             </FormGroup>
           </Col>
-          <Col md={2}>
+          <Col md={3}>
             <FormGroup>
-              <Label for="exampleZip">Zip</Label>
-              <Input type="text" name="zip" id="exampleZip" />
+              <Field
+                name="zipcode"
+                component={this.renderInput}
+                label=" Zipcode"
+              />
             </FormGroup>
           </Col>
         </Row>
         <div>
-          <Button className="btn btn-danger"> Sign Up</Button>
+          <Button className="btn btn-danger grow"> Sign Up</Button>
           <div className="row">
-            <p className="pt-3">Already have an account?</p>
-            <ModalSignUp className="pt-3" buttonLabel="SignIn" />
+            <p className="pt-3 ml-3">Already have an account?</p>
+            <ModalSignIn
+              className="pt-3"
+              buttonLabel="SignIn"
+              buttonColor="text-danger"
+            />
           </div>
         </div>
       </Form>
     );
   }
 }
+const validate = formValues => {
+  const errors = {};
+
+  if (!formValues.name) {
+    errors.email = "You must enter a email";
+  }
+
+  if (!formValues.password) {
+    errors.password = "You must enter a password";
+  }
+  if (!formValues.name) {
+    errors.name = "You must enter a name";
+  }
+  if (!formValues.address) {
+    errors.address = "You must enter a address";
+  }
+  if (!formValues.city) {
+    errors.city = "You must enter a city";
+  }
+  if (!formValues.state) {
+    errors.state = "You must enter a state";
+  }
+  if (!formValues.zipcode) {
+    errors.zipcode = "You must enter a zipcode";
+  }
+  if (!formValues.password) {
+    errors.password = "You must enter a password";
+  }
+
+  return errors;
+};
+
+export default reduxForm({
+  form: "SignUp",
+  validate
+})(SignUp);

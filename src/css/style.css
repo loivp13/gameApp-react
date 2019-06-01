@@ -1,7 +1,7 @@
 @import "./navbar/navbar.css";
 @import "./landingPage/landingPage.css";
 @import "./footer.css";
-@import "./signUp.css";
+@import "./signIn.css";
 @import url("https://fonts.googleapis.com/css?family=Oswald");
 
 body {
@@ -35,4 +35,9 @@ body {
 
 #browse_container {
   border: solid 2px black !important;
+}
+
+.browse_img_size {
+  max-height: 7em;
+  min-height: 7em;
 }

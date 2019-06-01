@@ -1,0 +1,12 @@
+.modal_label_animation:hover {
+  cursor: pointer;
+}
+.grow {
+  transition: all 0.2s ease-in-out;
+}
+.grow:hover {
+  transform: scale(1.2);
+}
+.modal_body_color {
+  background-color: #ff5154 !important;
+}

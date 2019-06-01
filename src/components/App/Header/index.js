@@ -1,5 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalSignIn_Out from "../ModalSignIn_Out";
+import { connect } from "react-redux";
 
 import {
   Collapse,
@@ -15,12 +17,9 @@ import {
   DropdownItem
 } from "reactstrap";
 
-export default class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class Header extends React.Component {
   render() {
+    let renderButtonLabel = this.props.isSignedIn ? "Sign Out" : "Sign In";
     return (
       <div>
         <Navbar color="dark" light expand="md" className="mb-4">
@@ -33,17 +32,29 @@ export default class Header extends React.Component {
             </div>
           </NavbarBrand>
 
-          <div className="ml-auto mr-5 text-dark game_deals d-md-none">
-            Account
-            <span className="ml-1">
-              <FontAwesomeIcon
-                className="text-dark"
-                icon={["fas", "user-circle"]}
+          <div className="ml-auto mr-5 text-white game_deals">
+            <div className="row mt-3 align-items-center ">
+              <ModalSignIn_Out
+                buttonLabel={renderButtonLabel}
+                buttonColor="text-white"
               />
-            </span>
+              <span className="ml-1">
+                <FontAwesomeIcon
+                  className="text-white"
+                  icon={["fas", "user-circle"]}
+                />
+              </span>
+            </div>
           </div>
         </Navbar>
       </div>
     );
   }
 }
+let mapStateToProps = (state, ownProps) => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  };
+};
+
+export default connect(mapStateToProps)(Header);

@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 import InputUtility from "../UtilitiesComponents/InputUtility";
 import SignUp from "./SignUp";
-
+import { connect } from "react-redux";
 import logoBrand from "../../../img/logoBrand.jpg";
-
 export class LandingPage extends Component {
+  componentWillMount() {
+    console.log(this.props);
+    if (this.props.isSignedIn) {
+      this.props.history.push("/userAccount");
+    }
+  }
+  componentDidUpdate() {
+    if (this.props.isSignedIn) {
+      this.props.history.push("/userAccount");
+    }
+  }
   render() {
     return (
       <div className="container" id="landingPageContainer">
@@ -38,5 +48,8 @@ export class LandingPage extends Component {
     );
   }
 }
+let mapStateToProps = (state, ownProps) => {
+  return { isSignedIn: state.auth.isSignedIn, dispatch: state.dispatch };
+};
 
-export default LandingPage;
+export default connect(mapStateToProps)(LandingPage);

@@ -10,8 +10,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./fontawesome";
 
 ReactDOM.render(
-  <Provider store={persistedStore().store}>
-    <PersistGate loading={null} persistor={persistedStore().persistors}>
+  <Provider store={persistedStore.store}>
+    <PersistGate loading={null} persistor={persistedStore.persistors}>
       <App />
     </PersistGate>
   </Provider>,
