@@ -17,6 +17,8 @@ import {
 import { connect } from "react-redux";
 import { signIn, signOut } from "./redux/actions";
 import { withRouter } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
+
 class ModalSignIn_Out extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,7 @@ class ModalSignIn_Out extends React.Component {
     }));
   }
 
+  //loading google api for auth2
   componentDidMount() {
     window.gapi.load("client:auth2", () => {
       window.gapi.client
@@ -66,6 +69,29 @@ class ModalSignIn_Out extends React.Component {
     }
   };
 
+  //rendering form-redux
+  renderInput = ({ input, label, meta }) => {
+    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+    return (
+      <div className={className}>
+        <Label>{label}</Label>
+        <Input {...input} autoComplete="off" />
+        {this.renderError(meta)}
+      </div>
+    );
+  };
+
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="text-danger">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+  }
+
+  //render either log in or log out button
   render() {
     let renderLogin_Out = () => {
       if (this.props.buttonLabel === "Sign Out") {
@@ -108,32 +134,28 @@ class ModalSignIn_Out extends React.Component {
             Sign In!
           </ModalHeader>
           <ModalBody className="bg-light ">
-            <Form>
+            <form>
               <Row form>
                 <Col xs={12}>
                   <FormGroup>
-                    <Label for="username">Username</Label>
-                    <Input
-                      type="text"
-                      name="user"
-                      id="username"
-                      placeholder=""
+                    <Field
+                      name="username"
+                      component={this.renderInput}
+                      label="Enter Your Username"
                     />
                   </FormGroup>
                 </Col>
                 <Col xs={12}>
                   <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input
-                      type="password"
-                      name="userpw"
-                      id="password"
-                      placeholder=""
+                    <Field
+                      name="password"
+                      component={this.renderInput}
+                      label="Enter Password"
                     />
                   </FormGroup>
                 </Col>
               </Row>
-            </Form>
+            </form>
           </ModalBody>
           <ModalFooter className="bg-dark">
             <Button className="mr-5" color="primary" onClick={this.toggle}>
@@ -151,9 +173,27 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
+const validate = formValues => {
+  const errors = {};
+
+  if (!formValues.email) {
+    errors.email = "You must enter a email";
+  }
+
+  if (!formValues.password) {
+    errors.password = "You must enter a password";
+  }
+
+  return errors;
+};
 export default withRouter(
   connect(
     mapStateToProps,
     { signIn, signOut }
-  )(ModalSignIn_Out)
+  )(
+    reduxForm({
+      form: "signIn",
+      validate
+    })(ModalSignIn_Out)
+  )
 );

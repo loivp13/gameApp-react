@@ -1,4 +1,7 @@
 import history from "../../../../history";
+import { Types } from "./index";
+import axios from "axios";
+
 export const selectShowPage = page => {
   return {
     type: page
@@ -22,5 +25,18 @@ export const signIn = userId => (dispatch, getState) => {
 export const signOut = () => {
   return {
     type: "SignOut"
+  };
+};
+
+export const signUpLocal = formValue => async (dispatch, getState) => {
+  console.log(formValue);
+  await axios.post("/authLocal", { formValue: formValue }).then(res => {
+    console.log(res.data);
+  });
+};
+
+export const signOutLocal = () => {
+  return {
+    type: Types.signOutLocal
   };
 };

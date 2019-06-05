@@ -9,5 +9,7 @@ export const Types = {
   SignIn: "SignIn",
   SignOut: "SignOut",
   Purge: "Purge",
-  AuthObject: "AuthObject"
+  AuthObject: "AuthObject",
+  SignInLocal: "SignInLocal",
+  SignOutLocal: "SignOutLocal"
 };

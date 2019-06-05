@@ -13,6 +13,8 @@ import {
   FormText
 } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { signUpLocal, signOutLocal } from "../redux/actions";
 
 export class SignUp extends React.Component {
   renderInput = ({ input, label, meta }) => {
@@ -37,7 +39,8 @@ export class SignUp extends React.Component {
   }
 
   onSubmit = formValues => {
-    this.props.onSubmit(formValues);
+    console.log(this.props);
+    this.props.signUpLocal(formValues);
   };
   render() {
     const modal = () => {
@@ -78,9 +81,9 @@ export class SignUp extends React.Component {
         </Row>
         <FormGroup>
           <Field
-            name="name"
+            name="username"
             component={this.renderInput}
-            label="First Name and Last Name"
+            label="Please Enter a Username"
           />
         </FormGroup>
         <FormGroup>
@@ -125,15 +128,15 @@ export class SignUp extends React.Component {
 const validate = formValues => {
   const errors = {};
 
-  if (!formValues.name) {
+  if (!formValues.email) {
     errors.email = "You must enter a email";
   }
 
   if (!formValues.password) {
     errors.password = "You must enter a password";
   }
-  if (!formValues.name) {
-    errors.name = "You must enter a name";
+  if (!formValues.username) {
+    errors.username = "You must enter a username";
   }
   if (!formValues.address) {
     errors.address = "You must enter a address";
@@ -147,14 +150,18 @@ const validate = formValues => {
   if (!formValues.zipcode) {
     errors.zipcode = "You must enter a zipcode";
   }
-  if (!formValues.password) {
-    errors.password = "You must enter a password";
-  }
 
   return errors;
 };
 
-export default reduxForm({
-  form: "SignUp",
-  validate
-})(SignUp);
+export default connect(
+  null,
+  {
+    signUpLocal
+  }
+)(
+  reduxForm({
+    form: "SignUp",
+    validate
+  })(SignUp)
+);

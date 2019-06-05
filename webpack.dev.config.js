@@ -58,6 +58,7 @@ module.exports = {
     ]
   },
   devServer: {
+    noInfo: true,
     historyApiFallback: true,
     proxy: {
       "/search": {

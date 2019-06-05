@@ -5,16 +5,6 @@ import { connect } from "react-redux";
 import logoBrand from "../../../img/logoBrand.jpg";
 
 export class LandingPage extends Component {
-  // componentWillMount() {
-  //   if (this.props.isSignedIn) {
-  //     this.props.history.push("/userAccount");
-  //   }
-  // }
-  // componentDidUpdate() {
-  //   if (this.props.isSignedIn) {
-  //     this.props.history.push("/userAccount");
-  //   }
-  // }
   render() {
     return (
       <div className="container" id="landingPageContainer">

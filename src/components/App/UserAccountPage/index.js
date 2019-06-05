@@ -9,6 +9,8 @@ import WishList from "./ShowPage/WishList";
 import Trade from "./ShowPage/Trade";
 import Setting from "./ShowPage/Setting";
 import Cart from "./ShowPage/Cart";
+import axios from "axios";
+import API_KEY from "../apiKeys/apiKeys";
 
 export class UserAccount extends Component {
   constructor(props) {
@@ -21,7 +23,24 @@ export class UserAccount extends Component {
 
     this.toggle = this.toggle.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    if (!this.props.apiSearchResponse)
+      axios({
+        url:
+          process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
+        method: "POST",
+        headers: {
+          ["user-key"]: API_KEY.igdb
+        },
+        data: `limit 50; fields name, genres.name, platforms.abbreviation, popularity, rating, rating_count, cover.url, similar_games.* ;`
+      })
+        .then(response => {
+          this.props.searchTerm(Types.SearchTerm, response.data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+  }
 
   toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
