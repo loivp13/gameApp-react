@@ -23,8 +23,10 @@ export class UserAccount extends Component {
 
     this.toggle = this.toggle.bind(this);
   }
-  componentDidMount() {
-    if (!this.props.apiSearchResponse)
+  componentWillMount() {
+    console.log(process.env.API_URL);
+
+    if (!this.props.apiSearchResponse) {
       axios({
         url:
           process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
@@ -40,6 +42,7 @@ export class UserAccount extends Component {
         .catch(err => {
           console.error(err);
         });
+    }
   }
 
   toggle() {
