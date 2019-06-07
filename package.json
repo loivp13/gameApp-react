@@ -9,7 +9,7 @@
     "buildDev": "rm -rf dist && webpack --mode development --config webpack.server.config.js && webpack --mode development --config webpack.dev.config.js",
     "buildProd": "rm -rf dist && webpack  --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",
     "start": "node ./dist/server.js",
-    "nodemon": "nodemon ./dist/server.js",
+    "nodemon": "nodemon --ignore ./src --ignore ./node_modules ./dist/server.js",
     "startAll": "npm-run-all -p nodemon watch-webpack.config",
     "watch-webpack.config": "webpack --watch --mode development --config webpack.server.config.js"
   },
@@ -74,6 +74,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.0",
+    "child_process": "^1.0.2",
     "connect-history-api-fallback": "^1.6.0",
     "css-loader": "^0.28.11",
     "dotenv": "^8.0.0",

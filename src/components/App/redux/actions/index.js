@@ -30,7 +30,7 @@ export const signOut = () => {
 
 export const signUpLocal = formValue => async (dispatch, getState) => {
   console.log(formValue);
-  await axios.post("/authLocal", { formValue: formValue }).then(res => {
+  await axios.post("/authLocal", formValue).then(res => {
     console.log(res.data);
   });
 };

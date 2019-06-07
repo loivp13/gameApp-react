@@ -39,7 +39,6 @@ export class LandingPage extends Component {
   }
 }
 let mapStateToProps = (state, ownProps) => {
-  console.log("bird");
   return { isSignedIn: state.auth.isSignedIn, dispatch: state.dispatch };
 };
 

@@ -2,11 +2,11 @@ const passport = require("passport");
 const User = require("./models/user.js");
 const LocalStrategy = require("passport-local").Strategy;
 //how to store user in the session
-module.exports = (function() {
+module.exports = function(passport) {
   passport.serializeUser((user, done) => {
+    console.log("init");
     done(null, user.id);
   });
-
   passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => {
       done(err, user);
@@ -23,7 +23,6 @@ module.exports = (function() {
       },
       (req, username, password, done) => {
         //use express-validator to check
-        console.log(req);
         req
           .checkBody("username", "Invalid username")
           .notEmpty()
@@ -116,4 +115,4 @@ module.exports = (function() {
       }
     )
   );
-})();
+};

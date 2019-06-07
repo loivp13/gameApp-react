@@ -6,4 +6,4 @@ router.post("/", passport.authenticate("local.signup"), (req, res, next) => {
   res.send("hi");
 });
 
-export default router;
+module.exports = router;
