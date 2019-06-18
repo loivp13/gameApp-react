@@ -9,6 +9,8 @@ import cors from "cors";
 import proxy from "http-proxy-middleware";
 
 const authLocalRoute = require("./routes/authLocal.js");
+const userRoute = require("./routes//userRoute.js");
+
 const passport = require("passport");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -36,9 +38,9 @@ app.use(express.json());
 
 // app.use(express.urlencoded({ extended: false }));
 // use cookieParser
-app.use(cookieParser());
+// app.use(cookieParser());
 
-//use express-session
+// use express-session
 app.use(
   session({
     secret: "dhfpaiojdhfopshdapfsapfoidnfopsangspd",
@@ -92,6 +94,7 @@ if (devServerProxy) {
 }
 //express routes
 app.use("/authLocal", authLocalRoute);
+app.use("/user", userRoute);
 
 app.get("*", (req, res, next) => {
   compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {

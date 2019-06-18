@@ -1,7 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalSignIn from "../ModalSignIn_Out";
-import GoogleAuth from "../GoogleAuth";
 import {
   Col,
   Row,
@@ -15,6 +14,7 @@ import {
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { signUpLocal, signOutLocal } from "../redux/actions";
+import { withRouter } from "react-router-dom";
 
 export class SignUp extends React.Component {
   renderInput = ({ input, label, meta }) => {
@@ -28,6 +28,12 @@ export class SignUp extends React.Component {
     );
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.forceUpdate();
+    }
+  }
+
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -39,8 +45,7 @@ export class SignUp extends React.Component {
   }
 
   onSubmit = formValues => {
-    console.log(this.props);
-    this.props.signUpLocal(formValues);
+    this.props.signUpLocal(formValues, history);
   };
   render() {
     const modal = () => {
@@ -52,12 +57,20 @@ export class SignUp extends React.Component {
         />
       );
     };
+
+    let Message = () => {
+      const { messages } = this.props.errorMessages;
+      if (messages.length > 0) {
+        return <div className="pl-5 text-danger">{messages}</div>;
+      } else {
+        return null;
+      }
+    };
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)} id="signUpForm">
         <div className="row align-items-center m-auto pb-2">
-          <div className="h4 mr-auto">Sign up!</div>
-          <div className="h5">Sign in with</div>
-          <GoogleAuth />
+          <div className="h4 mr-auto ">Sign up!</div>
+          {Message()}
         </div>
         <Row form>
           <Col md={6}>
@@ -110,10 +123,15 @@ export class SignUp extends React.Component {
             </FormGroup>
           </Col>
         </Row>
-        <div>
-          <Button className="btn btn-danger grow"> Sign Up</Button>
-          <div className="row">
-            <p className="pt-3 ml-3">Already have an account?</p>
+        <div className="row">
+          <div className="pr-5 pl-2">
+            <Button className="btn btn-danger grow"> Sign Up</Button>
+          </div>
+          <div className="row pt-2 pl-3">
+            <div>Sign up with</div>
+          </div>
+          <div className="row pl-3">
+            <p className="pt-3 mb-0 pl-3">Already have an account?</p>
             <ModalSignIn
               className="pt-3"
               buttonLabel="SignIn"
@@ -154,14 +172,22 @@ const validate = formValues => {
   return errors;
 };
 
-export default connect(
-  null,
-  {
-    signUpLocal
-  }
-)(
-  reduxForm({
-    form: "SignUp",
-    validate
-  })(SignUp)
+let mapStateToProps = (state, ownProps) => {
+  return {
+    errorMessages: state.errorMessages
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      signUpLocal
+    }
+  )(
+    reduxForm({
+      form: "SignUp",
+      validate
+    })(SignUp)
+  )
 );

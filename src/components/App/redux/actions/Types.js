@@ -11,5 +11,7 @@ export const Types = {
   Purge: "Purge",
   AuthObject: "AuthObject",
   SignInLocal: "SignInLocal",
-  SignOutLocal: "SignOutLocal"
+  SignOutLocal: "SignOutLocal",
+  TiggerErrorMessage: "TiggerErrorMessage",
+  WishList: "WishList"
 };

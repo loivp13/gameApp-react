@@ -37,11 +37,3 @@ library.add(
   faTimesCircle
   // more icons go here
 );
-
-// faTimesCircle,
-//   faTrashAlt,
-//   faExpandArrows,
-//   faCartPlus,
-//   faShoppingBasket,
-//   faMoneyBill,
-//   faSearch

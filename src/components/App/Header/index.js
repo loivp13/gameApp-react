@@ -19,7 +19,12 @@ import {
 
 class Header extends React.Component {
   render() {
-    let renderButtonLabel = this.props.isSignedIn ? "Sign Out" : "Sign In";
+    // localStorage.clear();
+
+    let renderButtonLabel =
+      this.props.isSignedIn || this.props.isSignedInLocal
+        ? "Sign Out"
+        : "Sign In";
     return (
       <div>
         <Navbar color="dark" light expand="md" className="mb-4">
@@ -53,7 +58,8 @@ class Header extends React.Component {
 }
 let mapStateToProps = (state, ownProps) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
+    isSignedInLocal: state.localAuth.isSignedInLocal
   };
 };
 

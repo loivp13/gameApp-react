@@ -3,9 +3,15 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
 let userSchema = new Schema({
-  password: { type: String, required: true },
   email: { type: String, required: true },
-  cart: { type: Object }
+  password: { type: String, required: true },
+  username: { type: String, required: true },
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  zipcode: { type: String, required: true },
+  cart: { type: Object },
+  wishList: { type: Object }
 });
 
 userSchema.methods.encryptPassword = function(password) {

@@ -17,6 +17,8 @@ import {
   CardFooter
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addToWishList } from "../../redux/actions";
+import { withRouter } from "react-router-dom";
 
 export class Browse extends Component {
   constructor(props) {
@@ -24,6 +26,29 @@ export class Browse extends Component {
     this.state = {};
   }
 
+  componentWillMount() {
+    // localStorage.clear();
+    this.cartStorage = JSON.parse(localStorage.getItem("cart")) || [];
+    this.wishlistStorage = JSON.parse(localStorage.getItem("wishlist")) || [];
+  }
+
+  handleCartClick = data => {
+    this.cartStorage.push(data);
+    console.log(this.cartStorage);
+    if (this.props.userIdLocal) {
+      localStorage.setItem("cart", JSON.stringify(this.cartStorage));
+    } else {
+      this.props.history.push("/");
+    }
+  };
+  handleWishlistClick = data => {
+    this.wishlistStorage.push(data);
+    if (this.props.userIdLocal) {
+      localStorage.setItem("wishlist", JSON.stringify(this.wishlistStorage));
+    } else {
+      this.props.history.push("/");
+    }
+  };
   render() {
     const browseColumnStyle = () => {
       return this.props.collapse
@@ -59,18 +84,30 @@ export class Browse extends Component {
                         ${((data.popularity / 20) * 60).toFixed(2)}
                       </div>
                       <hr className="browse_hr_dark" />
-                      <a className="col-6" color="danger">
+                      <div
+                        onClick={() => {
+                          this.handleWishlistClick(data);
+                        }}
+                        className="col-6 browse_fonticon_hovertransform"
+                        color="danger"
+                      >
                         <FontAwesomeIcon
-                          className="text-danger"
+                          className="text-danger "
                           icon={["fas", "heart"]}
                         />
-                      </a>
-                      <a className="col-6" color="primary">
+                      </div>
+                      <div
+                        onClick={() => {
+                          this.handleCartClick(data);
+                        }}
+                        className="col-6 browse_fonticon_hovertransform"
+                        color="primary"
+                      >
                         <FontAwesomeIcon
-                          className="text-primary"
+                          className="text-primary "
                           icon={["fas", "cart-plus"]}
                         />
-                      </a>
+                      </div>
                     </div>
                   </CardFooter>
                 </Card>
@@ -99,7 +136,14 @@ export class Browse extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    apiSearchResponse: state.apiSearchResponse
+    apiSearchResponse: state.apiSearchResponse,
+    userId: state.auth.userId,
+    userIdLocal: state.localAuth.userIdLocal
   };
 };
-export default connect(mapStateToProps)(Browse);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { addToWishList }
+  )(Browse)
+);

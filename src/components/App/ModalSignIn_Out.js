@@ -15,7 +15,7 @@ import {
   FormText
 } from "reactstrap";
 import { connect } from "react-redux";
-import { signIn, signOut } from "./redux/actions";
+import { signIn, signOut, signOutLocal, signInLocal } from "./redux/actions";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 
@@ -28,35 +28,28 @@ class ModalSignIn_Out extends React.Component {
 
     this.toggle = this.toggle.bind(this);
   }
-
+  componentWillMount() {
+    if (!this.props.isSignedInLocal) {
+      this.props.history.push("/");
+    }
+  }
   toggle() {
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
   }
-
-  //loading google api for auth2
-  componentDidMount() {
-    window.gapi.load("client:auth2", () => {
-      window.gapi.client
-        .init({
-          clientId:
-            "930973140367-ieggpaaj8to15jgors4jt43vqvmd9e18.apps.googleusercontent.com",
-          scope: "email"
-        })
-        .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
-          this.onAuthChange(this.auth.isSignedIn.get());
-          this.auth.isSignedIn.listen(this.onAuthChange);
-        });
-    });
-  }
-  onSignInClick = () => {
-    this.auth.signIn();
+  onSignInClick = formValue => {
+    this.props.signInLocal(formValue, this.props.history, this.toggle);
   };
 
   onSignOutClick = () => {
-    this.auth.signOut();
+    if (this.props.isSignedIn) {
+      return this.auth.SignOut();
+    } else {
+      this.props.signOutLocal();
+      this.props.history.push("/");
+      return;
+    }
   };
 
   onAuthChange = isSignedIn => {
@@ -133,9 +126,9 @@ class ModalSignIn_Out extends React.Component {
           >
             Sign In!
           </ModalHeader>
-          <ModalBody className="bg-light ">
-            <form>
-              <Row form>
+          <form onSubmit={this.props.handleSubmit(this.onSignInClick)}>
+            <ModalBody className="bg-light ">
+              <Row>
                 <Col xs={12}>
                   <FormGroup>
                     <Field
@@ -155,13 +148,13 @@ class ModalSignIn_Out extends React.Component {
                   </FormGroup>
                 </Col>
               </Row>
-            </form>
-          </ModalBody>
-          <ModalFooter className="bg-dark">
-            <Button className="mr-5" color="primary" onClick={this.toggle}>
-              Sign In
-            </Button>
-          </ModalFooter>
+            </ModalBody>
+            <ModalFooter className="bg-dark">
+              <Button className="mr-5" color="primary">
+                Sign In
+              </Button>
+            </ModalFooter>
+          </form>
         </Modal>
       </React.Fragment>
     );
@@ -169,7 +162,8 @@ class ModalSignIn_Out extends React.Component {
 }
 let mapStateToProps = (state, ownProps) => {
   return {
-    isSignedIn: state.auth.isSignedIn
+    isSignedIn: state.auth.isSignedIn,
+    isSignedInLocal: state.localAuth.isSignedInLocal
   };
 };
 
@@ -189,7 +183,7 @@ const validate = formValues => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { signIn, signOut }
+    { signIn, signOut, signOutLocal, signInLocal }
   )(
     reduxForm({
       form: "signIn",

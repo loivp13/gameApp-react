@@ -40,7 +40,7 @@ class GoogleAuth extends React.Component {
   };
 
   renderAuthButton() {
-    if (this.props.isSignedIn) {
+    if (this.props.isSignedIn || this.props.isSignedInLocal) {
       return (
         <button onClick={this.onSignOutClick} className="btn btn-danger">
           Sign Out
@@ -50,7 +50,7 @@ class GoogleAuth extends React.Component {
       return (
         <FontAwesomeIcon
           onClick={this.onSignInClick}
-          className="text-danger ml-1 mb-1"
+          className="text-danger ml-1 mb-1 browse_fonticon_hovertransform"
           icon={["fab", "google"]}
           size="2x"
         />
@@ -64,7 +64,10 @@ class GoogleAuth extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { isSignedIn: state.auth.isSignedIn };
+  return {
+    isSignedIn: state.auth.isSignedIn,
+    isSignedInLocal: state.localAuth.isSignedInLocal
+  };
 };
 
 export default withRouter(

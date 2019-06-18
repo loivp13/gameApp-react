@@ -4,7 +4,6 @@ const LocalStrategy = require("passport-local").Strategy;
 //how to store user in the session
 module.exports = function(passport) {
   passport.serializeUser((user, done) => {
-    console.log("init");
     done(null, user.id);
   });
   passport.deserializeUser((id, done) => {
@@ -23,32 +22,10 @@ module.exports = function(passport) {
       },
       (req, username, password, done) => {
         //use express-validator to check
-        req
-          .checkBody("username", "Invalid username")
-          .notEmpty()
-          .isLength({ min: 4 });
-        req
-          .checkBody("email", "Invalid email")
-          .notEmpty()
-          .isEmail();
-        req
-          .checkBody("password", "Invalid password")
-          .notEmpty()
-          .isLength({ min: 4 });
-
-        let errors = req.validationErrors();
-        let messages = [];
-        if (errors) {
-          errors.forEach(error => {
-            messages.push(error.msg);
-          });
-          return done(null, false, req.flash("signupErrors", messages));
-        }
-
-        let email = req.body.email;
+        console.log("checking for if user exist");
+        let { email, address, city, state, zipcode } = req.body;
         User.findOne({ email: email }, (err, user) => {
           if (err) {
-            console.log(err);
             return done(err);
           }
           if (user) {
@@ -58,11 +35,16 @@ module.exports = function(passport) {
               req.flash("signupErrors", "This email has been taken")
             );
           }
-          console.log("making a new user");
           const newUser = new User();
-          newUser.email = email;
-          newUser.username = username;
-          newUser.password = newUser.encryptPassword(password);
+          newUser.set({
+            email,
+            password: newUser.encryptPassword(password),
+            username,
+            address,
+            city,
+            state,
+            zipcode
+          });
           newUser.save(function(err, result) {
             if (err) {
               console.log(err);
@@ -84,30 +66,22 @@ module.exports = function(passport) {
         passReqToCallback: true
       },
       function(req, username, password, done) {
-        req.checkBody("username", "Invalid username").notEmpty();
-        req.checkBody("password", "Invalid password").notEmpty();
-
-        let errors = req.validationErrors();
-        if (errors) {
-          let messages = [];
-          errors.forEach(error => {
-            messages.push(error.msg);
-          });
-          return done(null, false, req.flash("loginErrors", messages));
-        }
-
         User.findOne({ username: username }, function(err, user) {
           if (err) {
             return done(err);
           }
           if (!user) {
-            return done(null, false, req.flash("loginErrors", messages));
+            return done(
+              null,
+              false,
+              req.flash("loginError", "Incorrect username")
+            );
           }
           if (!user.validPassword(password)) {
             return done(
               null,
               false,
-              req.flash("loginErrors", "Password is incorrect")
+              req.flash("loginError", "Incorrect password")
             );
           }
           return done(null, user);

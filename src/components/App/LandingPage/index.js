@@ -1,10 +1,18 @@
 import React, { Component } from "react";
-import InputUtility from "../UtilitiesComponents/InputUtility";
 import SignUp from "./SignUp";
 import { connect } from "react-redux";
+import { ResolveErrorMessage } from "../redux/actions";
 import logoBrand from "../../../img/logoBrand.jpg";
+import { withRouter } from "react-router-dom";
 
 export class LandingPage extends Component {
+  componentWillMount() {
+    this.props.ResolveErrorMessage();
+
+    if (this.props.isSignedIn || this.props.isSignedInLocal) {
+      this.props.history.push("/userAccount");
+    }
+  }
   render() {
     return (
       <div className="container" id="landingPageContainer">
@@ -38,8 +46,18 @@ export class LandingPage extends Component {
     );
   }
 }
+
 let mapStateToProps = (state, ownProps) => {
-  return { isSignedIn: state.auth.isSignedIn, dispatch: state.dispatch };
+  return {
+    isSignedIn: state.auth.isSignedIn,
+    isSignedInLocal: state.localAuth.isSignedInLocal,
+    errorMessages: state.errorMessages
+  };
 };
 
-export default connect(mapStateToProps)(LandingPage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { ResolveErrorMessage }
+  )(LandingPage)
+);

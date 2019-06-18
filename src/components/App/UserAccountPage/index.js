@@ -2,46 +2,28 @@ import React, { Component } from "react";
 import BasicCollapse from "../BasicCollapse";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
-import { selectShowPage } from "../redux/actions";
+import { selectShowPage, searchTerm } from "../redux/actions";
 import Browse from "./ShowPage/Browse";
 import Sell from "./ShowPage/Sell";
 import WishList from "./ShowPage/WishList";
 import Trade from "./ShowPage/Trade";
 import Setting from "./ShowPage/Setting";
 import Cart from "./ShowPage/Cart";
-import axios from "axios";
-import API_KEY from "../apiKeys/apiKeys";
 
 export class UserAccount extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      username: null || "realUsername",
       collapse: true
     };
 
     this.toggle = this.toggle.bind(this);
   }
-  componentWillMount() {
-    console.log(process.env.API_URL);
-
-    if (!this.props.apiSearchResponse) {
-      axios({
-        url:
-          process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
-        method: "POST",
-        headers: {
-          ["user-key"]: API_KEY.igdb
-        },
-        data: `limit 50; fields name, genres.name, platforms.abbreviation, popularity, rating, rating_count, cover.url, similar_games.* ;`
-      })
-        .then(response => {
-          this.props.searchTerm(Types.SearchTerm, response.data);
-        })
-        .catch(err => {
-          console.error(err);
-        });
+  componentDidMount() {
+    if (this.props.apiSearchResponse.length === 0) {
+      console.log("mounted search");
+      this.props.searchTerm("smash");
     }
   }
 
@@ -103,11 +85,12 @@ export class UserAccount extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentPage: state.currentShowPage.currentPage
+    currentPage: state.currentShowPage.currentPage,
+    apiSearchResponse: state.apiSearchResponse
   };
 };
 
 export default connect(
   mapStateToProps,
-  { selectShowPage }
+  { selectShowPage, searchTerm }
 )(UserAccount);
