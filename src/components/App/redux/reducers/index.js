@@ -6,6 +6,7 @@ import authReducer from "./authReducer";
 import purgeReducer from "./purgeReducer";
 import localAuthReducer from "./localAuthReducer";
 import errorMessageReducer from "./errorMessageReducer";
+import cartReducer from "./cartReducer";
 
 export default combineReducers({
   form: formReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   auth: authReducer,
   purge: purgeReducer,
   localAuth: localAuthReducer,
-  errorMessages: errorMessageReducer
+  errorMessages: errorMessageReducer,
+  cart: cartReducer
 });

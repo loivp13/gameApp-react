@@ -13,5 +13,10 @@ export const Types = {
   SignInLocal: "SignInLocal",
   SignOutLocal: "SignOutLocal",
   TiggerErrorMessage: "TiggerErrorMessage",
-  WishList: "WishList"
+  WishList: "WishList",
+  AddToCart: "AddToCart",
+  RemoveFromCart: "RemoveFromCart",
+  RemoveAllFromCart: "RemoveAllFromCart",
+  IncreaseItemQuantity: "IncreaseItemQuantity",
+  DecreaseItemQuantity: "DecreaseItemQuantity"
 };

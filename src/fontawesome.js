@@ -11,7 +11,9 @@ import {
   faCartPlus,
   faShoppingBag,
   faMoneyBill,
-  faSearch
+  faSearch,
+  faPlus,
+  faMinus
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -34,6 +36,8 @@ library.add(
   faShoppingBag,
   faMoneyBill,
   faSearch,
-  faTimesCircle
+  faTimesCircle,
+  faPlus,
+  faMinus
   // more icons go here
 );

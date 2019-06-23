@@ -15,21 +15,7 @@ class InputUtility extends React.Component {
   }
 
   handleSearchClick = term => {
-    let ageRating = [];
-    axios({
-      url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
-      method: "POST",
-      headers: {
-        ["user-key"]: API_KEY.igdb
-      },
-      data: `search "${term}"; limit 50; fields name, genres.name, platforms.abbreviation, popularity, rating, rating_count, cover.url, similar_games.name ;`
-    })
-      .then(response => {
-        this.props.searchTerm(Types.SearchTerm, response.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    this.props.searchTerm(term);
   };
 
   render() {

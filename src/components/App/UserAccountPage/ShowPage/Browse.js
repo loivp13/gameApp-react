@@ -17,34 +17,36 @@ import {
   CardFooter
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { addToWishList } from "../../redux/actions";
+import { addToWishList, addToCart } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 
 export class Browse extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      wishlistStorage: JSON.parse(localStorage.getItem("wishlist")) || []
+    };
   }
 
   componentWillMount() {
     // localStorage.clear();
-    this.cartStorage = JSON.parse(localStorage.getItem("cart")) || [];
-    this.wishlistStorage = JSON.parse(localStorage.getItem("wishlist")) || [];
   }
 
   handleCartClick = data => {
-    this.cartStorage.push(data);
-    console.log(this.cartStorage);
     if (this.props.userIdLocal) {
-      localStorage.setItem("cart", JSON.stringify(this.cartStorage));
+      this.props.addToCart(data);
     } else {
       this.props.history.push("/");
     }
   };
   handleWishlistClick = data => {
-    this.wishlistStorage.push(data);
+    console.log(data);
+    this.state.wishlistStorage.push(data);
     if (this.props.userIdLocal) {
-      localStorage.setItem("wishlist", JSON.stringify(this.wishlistStorage));
+      localStorage.setItem(
+        "wishlist",
+        JSON.stringify(this.state.wishlistStorage)
+      );
     } else {
       this.props.history.push("/");
     }
@@ -59,6 +61,9 @@ export class Browse extends Component {
       let { apiSearchResponse } = this.props;
       return apiSearchResponse
         ? apiSearchResponse.map(data => {
+            data.basePrice = parseFloat(
+              ((data.popularity / 20) * 60).toFixed(2)
+            );
             let checkForCoverArt = () => {
               if (data.cover) {
                 return data.cover.url.replace(/thumb/, "cover_big");
@@ -81,7 +86,7 @@ export class Browse extends Component {
                   <CardFooter className="align-content-end">
                     <div className="row">
                       <div className=" col-8 mb-2 text-center border-bottom border-dark">
-                        ${((data.popularity / 20) * 60).toFixed(2)}
+                        ${data.basePrice}
                       </div>
                       <hr className="browse_hr_dark" />
                       <div
@@ -144,6 +149,6 @@ const mapStateToProps = (state, ownProps) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { addToWishList }
+    { addToWishList, addToCart }
   )(Browse)
 );

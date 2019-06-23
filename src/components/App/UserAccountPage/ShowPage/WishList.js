@@ -26,7 +26,9 @@ export class WishList extends Component {
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    // localStorage.clear();
+  }
   handleTrashClick = index => {
     console.log(this.props.userIdLocal);
     if (this.props.userIdLocal) {
@@ -51,7 +53,7 @@ export class WishList extends Component {
     const renderCards = () => {
       let { wishlistStorage } = this.state;
 
-      return wishlistStorage.length > 1 ? (
+      return wishlistStorage.length > 0 ? (
         wishlistStorage.map((data, index) => {
           let checkForCoverArt = () => {
             if (data.cover) {
@@ -105,11 +107,14 @@ export class WishList extends Component {
     return (
       <div>
         <div id="browse_container" className="row rounded border border-dark">
-          <div className="col-6 w-100 my-4" />
+          <div className="col-6 w-100" />
 
           <div className="col-12">
+            <div className="h4 p-2">WishList</div>
+            <hr />
             <div className="row">
               {/* <div className={browseColumnStyle()} /> */}
+
               {renderCards()}
             </div>
           </div>

@@ -20,7 +20,13 @@ export class UserAccount extends Component {
 
     this.toggle = this.toggle.bind(this);
   }
+
+  componentWillMount() {
+    localStorage.clear();
+  }
   componentDidMount() {
+    localStorage.clear();
+
     if (this.props.apiSearchResponse.length === 0) {
       console.log("mounted search");
       this.props.searchTerm("smash");
