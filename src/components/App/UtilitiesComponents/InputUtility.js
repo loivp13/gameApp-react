@@ -20,7 +20,12 @@ class InputUtility extends React.Component {
 
   render() {
     return (
-      <InputGroup className="border border-dark rounded">
+      <InputGroup
+        onSubmit={() => {
+          this.handleSearchClick(term);
+        }}
+        className="border border-dark rounded"
+      >
         <InputGroupAddon addonType="prepend">
           <Button
             onClick={() => {
@@ -32,6 +37,11 @@ class InputUtility extends React.Component {
           </Button>
         </InputGroupAddon>
         <Input
+          onKeyDown={e => {
+            if (e.keyCode === 13) {
+              this.handleSearchClick(this.state.searchTerm);
+            }
+          }}
           onChange={e => {
             this.setState({ searchTerm: e.target.value });
           }}
