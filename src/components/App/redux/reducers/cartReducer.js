@@ -16,10 +16,9 @@ export default (state = INTIAL_STATE, action) => {
       ) {
         return {
           ...state,
-          items: [...state.items].map(item => {
+          items: state.items.map(item => {
             if (item.id === action.payload.id) {
-              ++item.quantity;
-              return item;
+              return { ...item, quantity: ++action.payload.quantity };
             } else {
               return item;
             }
@@ -44,23 +43,33 @@ export default (state = INTIAL_STATE, action) => {
           items: [
             ...state.items.slice(0, action.payload.index),
             ...state.items.slice(action.payload.index + 1)
-          ]
+          ],
+          subtotal: (state.subtotal -= action.payload.data.basePrice),
+          quantity: (state.quantity -= 1)
         };
       } else {
         return {
           ...state,
           items: [...state.items].map((item, index) => {
             if (index === action.payload.index) {
-              item.quantity -= 1;
-              return item;
+              return { ...item, quantity: --action.payload.data.quantity };
             } else {
               return item;
             }
-          })
+          }),
+          subtotal: (state.subtotal -= action.payload.data.basePrice),
+          quantity: (state.quantity -= 1)
         };
       }
     case Types.RemoveAllFromCart:
-      return { ...state, isSignedInLocal: false, userIdLocal: null };
+      return {
+        ...state,
+        items: state.items.filter((item, index) => {
+          return index !== action.payload.index;
+        }),
+        subtotal: (state.subtotal -=
+          action.payload.data.basePrice * action.payload.data.quantity)
+      };
     case Types.IncreaseItemQuantity:
       return { ...state, isSignedInLocal: false, userIdLocal: null };
     case Types.DecreaseItemQuantity:

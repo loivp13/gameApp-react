@@ -43,7 +43,7 @@ class Cart extends Component {
           <span className="mr-3">
             <strong>{this.props.cart.quantity}</strong>
           </span>
-          ${this.props.cart.subtotal}
+          ${this.props.cart.subtotal.toFixed(2)}
         </div>
       </div>
     );

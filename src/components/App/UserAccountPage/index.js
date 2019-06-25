@@ -28,7 +28,6 @@ export class UserAccount extends Component {
     localStorage.clear();
 
     if (this.props.apiSearchResponse.length === 0) {
-      console.log("mounted search");
       this.props.searchTerm("smash");
     }
   }

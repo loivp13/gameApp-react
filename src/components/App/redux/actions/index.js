@@ -9,7 +9,6 @@ export const selectShowPage = page => {
 };
 
 export const searchTerm = term => async dispatch => {
-  console.log(term);
   let response = await axios({
     url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
     method: "POST",
@@ -84,7 +83,6 @@ export const ResolveErrorMessage = () => {
 };
 
 export const addToCart = data => {
-  console.log(data);
   return {
     type: Types.AddToCart,
     payload: data
@@ -96,9 +94,12 @@ export const removeFromCart = (data, index) => {
     payload: { data, index }
   };
 };
-export const removeAllFromCart = data => {
+export const removeAllFromCart = (data, index) => {
+  console.log(index);
+
   return {
-    type: Types.RemoveAllFromCart
+    type: Types.RemoveAllFromCart,
+    payload: { data, index }
   };
 };
 export const increaseItemQuantity = data => {

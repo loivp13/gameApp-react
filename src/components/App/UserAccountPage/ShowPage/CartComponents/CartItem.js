@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
-import { removeFromCart, addToCart } from "../../../redux/actions";
+import {
+  removeFromCart,
+  addToCart,
+  removeAllFromCart
+} from "../../../redux/actions";
 import { withRouter } from "react-router-dom";
-import { runInThisContext } from "vm";
 class CartItem extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,11 @@ class CartItem extends Component {
   handleMinusClick = (data, index) => {
     this.props.removeFromCart(data, index);
   };
+
+  clickDelete = (data, index) => {
+    this.props.removeAllFromCart(data, index);
+  };
+
   render() {
     let checkForCoverArt = () => {
       if (this.props.item.cover) {
@@ -69,7 +77,7 @@ class CartItem extends Component {
             </div>
             <div
               onClick={() => {
-                this.props.clickDelete(this.props.item, this.props.index);
+                this.clickDelete(this.props.item, this.props.index);
               }}
               className="col-1 browse_fonticon_hovertransform ml-auto "
               color="primary"
@@ -93,6 +101,6 @@ let mapStateToProps = (state, ownProps) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { removeFromCart, addToCart }
+    { removeFromCart, addToCart, removeAllFromCart }
   )(CartItem)
 );
