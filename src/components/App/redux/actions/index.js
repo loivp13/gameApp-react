@@ -8,6 +8,20 @@ export const selectShowPage = page => {
   };
 };
 
+export const searchSellTitle = term => async dispatch => {
+  let response = await axios({
+    url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
+    method: "POST",
+    headers: {
+      ["user-key"]: API_KEY.igdb
+    },
+    data: `search "${term}"; limit 30; fields name, cover.url ;`
+  });
+  dispatch({
+    type: Types.SearchSellTitle,
+    payload: response.data
+  });
+};
 export const searchTerm = term => async dispatch => {
   let response = await axios({
     url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
@@ -110,7 +124,26 @@ export const increaseItemQuantity = data => {
 };
 export const decreaseItemQuantity = data => {
   return {
-    type: Types.DEcreaseItemQuantity,
+    type: Types.DecreaseItemQuantity,
     payload: data
+  };
+};
+export const placeOrder = () => {
+  return {
+    type: Types.PlaceOrder
+  };
+};
+
+export const addToListed = (data, price) => {
+  return {
+    type: Types.AddtoListed,
+    payload: { data, price }
+  };
+};
+
+export const RemoveFromListed = (data, index) => {
+  return {
+    type: Types.RemoveFromListed,
+    payload: { data, index }
   };
 };

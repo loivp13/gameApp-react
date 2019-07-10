@@ -40,7 +40,7 @@ class CartItem extends Component {
                 alt=""
               />
             </div>
-            <div className="col-2 shopping_cart_title">
+            <div className="d-sm-block d-md-none d-lg-block col-md-2 shopping_cart_title">
               <div className="row">
                 <div className="">{this.props.item.name}</div>
               </div>
@@ -75,6 +75,11 @@ class CartItem extends Component {
                 </div>
               </div>
             </div>
+            <div className="col-2">
+              {(this.props.item.basePrice * this.props.item.quantity).toFixed(
+                2
+              )}
+            </div>
             <div
               onClick={() => {
                 this.clickDelete(this.props.item, this.props.index);
@@ -83,7 +88,7 @@ class CartItem extends Component {
               color="primary"
             >
               <FontAwesomeIcon
-                className="text-primary "
+                className="text-danger "
                 icon={["fas", "trash"]}
               />
             </div>

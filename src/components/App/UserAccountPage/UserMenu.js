@@ -13,7 +13,6 @@ export class UserMenu extends Component {
     };
 
     this.handleSelect = page => {
-      console.log(page);
       this.props.selectShowPage(page);
     };
   }
@@ -22,7 +21,7 @@ export class UserMenu extends Component {
     return (
       <div className="pt-2 pl-2">
         <div className="row align-items-center">
-          <div className="col-4" id="">
+          <div className="col-6" id="">
             <img
               src={this.state.imageSrc}
               className="img-thumbnail border-0"
@@ -30,15 +29,12 @@ export class UserMenu extends Component {
             />
           </div>
 
-          <div className="col-4" id="">
+          <div className="col-6" id="">
             <div className="row justify-items-center">
-              <div className="col text-center">Welcome User</div>
-              {this.props.username}
+              <div className="col text-center">
+                Welcome {this.props.username}{" "}
+              </div>
             </div>
-          </div>
-
-          <div className="col-4 text-center" id="">
-            Sold!
           </div>
         </div>
 
@@ -89,22 +85,11 @@ export class UserMenu extends Component {
                 size="lg"
                 color="primary"
                 onClick={() => {
-                  this.handleSelect("Trade");
+                  this.handleSelect("Listed Items");
                 }}
                 outline
               >
-                Trade
-              </Button>
-              <Button
-                size="lg"
-                color="primary"
-                onClick={() => {
-                  this.handleSelect("Setting");
-                }}
-                disabled
-                outline
-              >
-                Setting
+                Listed Items
               </Button>
             </ButtonGroup>
           </div>
@@ -114,7 +99,13 @@ export class UserMenu extends Component {
   }
 }
 
+let mapStateToProps = (state, ownProps) => {
+  return {
+    username: state.localAuth.userIdLocal
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { selectShowPage }
 )(UserMenu);

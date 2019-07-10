@@ -7,6 +7,8 @@ import purgeReducer from "./purgeReducer";
 import localAuthReducer from "./localAuthReducer";
 import errorMessageReducer from "./errorMessageReducer";
 import cartReducer from "./cartReducer";
+import searchSellTitleReducer from "./searchSellTitleReducer";
+import listedItemsReducers from "./listedItemsReducers";
 
 export default combineReducers({
   form: formReducer,
@@ -16,5 +18,7 @@ export default combineReducers({
   purge: purgeReducer,
   localAuth: localAuthReducer,
   errorMessages: errorMessageReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  titleSearchResponse: searchSellTitleReducer,
+  listedItems: listedItemsReducers
 });

@@ -12,23 +12,22 @@ class BasicCollapse extends Component {
     const floatDirection = this.props.collapse ? "d-none" : "";
 
     const style = {
-      position: ""
+      position: "sticky"
     };
     return (
       <React.Fragment>
         <Button
           size="sm"
-          className={floatDirection}
+          className={`${floatDirection} `}
           color="blue"
           onClick={this.props.onToggle}
-          style={{ style }}
         >
           {this.props.buttonIcon()}
         </Button>
-        <Collapse isOpen={this.props.collapse}>
+        <Collapse isOpen={this.props.collapse} className="">
           <div
             id="collapse-container"
-            className="row rounded collapse-container border boder-dark pb-4"
+            className="row rounded collapse-container border border-dark pb-4 posi tion-sticky"
           >
             <div className="col-12">
               <Button

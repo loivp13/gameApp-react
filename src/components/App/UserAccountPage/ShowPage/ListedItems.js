@@ -16,28 +16,13 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { withRouter } from "react-router-dom";
-import { addToCart } from "../../redux/actions";
+import { RemoveFromListed } from "../../redux/actions";
 
 export class WishList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cartStorage: JSON.parse(localStorage.getItem("cart")) || [],
-      wishlistStorage: JSON.parse(localStorage.getItem("wishlist")) || []
-    };
-  }
-
-  componentWillMount() {
-    // localStorage.clear();
-  }
-  handleTrashClick = index => {
+  handleTrashClick = (data, index) => {
+    console.log(this.props);
     if (this.props.userIdLocal) {
-      let clonewishlist = [...this.state.wishlistStorage];
-      clonewishlist.splice(index, 1);
-      this.setState({
-        wishlistStorage: clonewishlist
-      });
-      localStorage.setItem("wishlist", JSON.stringify(clonewishlist));
+      this.props.RemoveFromListed(data, index);
     } else {
       this.props.history.push("/");
     }
@@ -49,10 +34,10 @@ export class WishList extends Component {
         : "col-10 col-sm-5 col-md-4 col-lg-2 mb-2";
     };
     const renderCards = () => {
-      let { wishlistStorage } = this.state;
+      let { listedItems } = this.props;
 
-      return wishlistStorage.length > 0 ? (
-        wishlistStorage.map((data, index) => {
+      return listedItems.length > 0 ? (
+        listedItems.map((data, index) => {
           let checkForCoverArt = () => {
             if (data.cover) {
               return data.cover.url.replace(/thumb/, "cover_big");
@@ -75,12 +60,12 @@ export class WishList extends Component {
                 <CardFooter className="align-content-end">
                   <div className="row">
                     <div className=" col-12 mb-2 text-center border-bottom border-dark">
-                      ${((data.popularity / 20) * 60).toFixed(2)}
+                      ${(+data.sellingPrice).toFixed(2)}
                     </div>
                     <hr className="browse_hr_dark" />
                     <div
                       onClick={() => {
-                        this.handleTrashClick(index);
+                        this.handleTrashClick(data, index);
                       }}
                       className="col-6 browse_fonticon_hovertransform align-self-end"
                       color="primary"
@@ -90,19 +75,6 @@ export class WishList extends Component {
                         icon={["fas", "trash"]}
                       />
                     </div>
-                    <div
-                      onClick={() => {
-                        this.props.addToCart(data);
-                        this.handleTrashClick(index);
-                      }}
-                      className="col-6 browse_fonticon_hovertransform align-self-end"
-                      color="primary"
-                    >
-                      <FontAwesomeIcon
-                        className="text-primary "
-                        icon={["fas", "cart-plus"]}
-                      />
-                    </div>
                   </div>
                 </CardFooter>
               </Card>
@@ -110,9 +82,7 @@ export class WishList extends Component {
           );
         })
       ) : (
-        <div className="align-items-center mb-5">
-          Nothing in wishlist! Go add some!
-        </div>
+        <div className="align-items-center mb-5">Nothing is listed!</div>
       );
     };
     return (
@@ -121,13 +91,9 @@ export class WishList extends Component {
           <div className="col-6 w-100" />
 
           <div className="col-12">
-            <div className="h4 p-2">WishList</div>
+            <div className="h4 p-2">Listed Items</div>
             <hr />
-            <div className="row">
-              {/* <div className={browseColumnStyle()} /> */}
-
-              {renderCards()}
-            </div>
+            <div className="row">{renderCards()}</div>
           </div>
         </div>
       </div>
@@ -136,13 +102,13 @@ export class WishList extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    apiSearchResponse: state.apiSearchResponse,
-    userIdLocal: state.localAuth.userIdLocal
+    userIdLocal: state.localAuth.userIdLocal,
+    listedItems: state.listedItems
   };
 };
 export default withRouter(
   connect(
     mapStateToProps,
-    { addToCart }
+    { RemoveFromListed }
   )(WishList)
 );

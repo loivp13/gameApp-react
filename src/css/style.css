@@ -45,3 +45,20 @@ body {
 .browse_fonticon_hovertransform:hover {
   transform: scale(1.3);
 }
+
+.position-fixed {
+  width: inherit;
+}
+
+.Sell_Form_Border {
+  background-image: linear-gradient(to right bottom, #d6c6c7, rgb(0, 0, 0));
+}
+
+.Sell_Img_SizeSm {
+  width: 6vw;
+  height: 6vw;
+}
+.Sell_Img_SizeLg {
+  width: 8vw;
+  height: 8vw;
+}

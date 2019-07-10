@@ -68,10 +68,12 @@ export default (state = INTIAL_STATE, action) => {
           return index !== action.payload.index;
         }),
         subtotal: (state.subtotal -=
-          action.payload.data.basePrice * action.payload.data.quantity)
+          action.payload.data.basePrice * action.payload.data.quantity),
+        quantity: (state.quantity -= action.payload.data.quantity)
       };
-    case Types.IncreaseItemQuantity:
-      return { ...state, isSignedInLocal: false, userIdLocal: null };
+    case Types.PlaceOrder:
+      console.log("order");
+      return { ...INTIAL_STATE };
     case Types.DecreaseItemQuantity:
       return { ...state, isSignedInLocal: false, userIdLocal: null };
     default:

@@ -3,7 +3,7 @@ export const Types = {
   Sell: "Sell",
   WishList: "WishList",
   Setting: "Setting",
-  Trade: "Trade",
+  ListedItems: "Listed Items",
   Cart: "Cart",
   SearchTerm: "SearchTerm",
   SignIn: "SignIn",
@@ -18,5 +18,9 @@ export const Types = {
   RemoveFromCart: "RemoveFromCart",
   RemoveAllFromCart: "RemoveAllFromCart",
   IncreaseItemQuantity: "IncreaseItemQuantity",
-  DecreaseItemQuantity: "DecreaseItemQuantity"
+  DecreaseItemQuantity: "DecreaseItemQuantity",
+  PlaceOrder: "PlaceOrder",
+  SearchSellTitle: "SearchSellTitle",
+  AddtoListed: " AddtoListed",
+  RemoveFromListed: "RemoveFromListed"
 };

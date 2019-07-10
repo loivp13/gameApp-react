@@ -14,17 +14,25 @@ import {
   CardBody,
   ButtonGroup,
   CardHeader,
-  CardFooter
+  CardFooter,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addToWishList, addToCart } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
+import _ from "lodash";
+import Pagination from "../Pagination";
 
 export class Browse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wishlistStorage: JSON.parse(localStorage.getItem("wishlist")) || []
+      wishlistStorage: JSON.parse(localStorage.getItem("wishlist")) || [],
+      pagination: 0,
+      dropdownOpen: false
     };
   }
 
@@ -40,7 +48,6 @@ export class Browse extends Component {
     }
   };
   handleWishlistClick = data => {
-    console.log(data);
     this.state.wishlistStorage.push(data);
     if (this.props.userIdLocal) {
       localStorage.setItem(
@@ -51,16 +58,25 @@ export class Browse extends Component {
       this.props.history.push("/");
     }
   };
+  handlePageClick = page => {
+    this.setState({ pagination: page });
+  };
+
+  toggle = () => {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  };
   render() {
     const browseColumnStyle = () => {
       return this.props.collapse
-        ? "col-10 col-sm-5 col-md-3 col-lg-3 mb-2"
+        ? "col-10 col-sm-5 col-md-4 col-lg-3 mb-2"
         : "col-10 col-sm-5 col-md-4 col-lg-2 mb-2";
     };
     const renderCards = () => {
-      let { apiSearchResponse } = this.props;
-      return apiSearchResponse
-        ? apiSearchResponse.map(data => {
+      let apiSearchResponse = _.chunk(this.props.apiSearchResponse, 8);
+      return apiSearchResponse.length > 0
+        ? apiSearchResponse[this.state.pagination].map(data => {
             data.basePrice = parseFloat(
               ((data.popularity / 20) * 60).toFixed(2)
             );
@@ -85,8 +101,8 @@ export class Browse extends Component {
                   </CardBody>
                   <CardFooter className="align-content-end">
                     <div className="row">
-                      <div className=" col-8 mb-2 text-center border-bottom border-dark">
-                        ${data.basePrice}
+                      <div className=" col-12 mb-2 text-center border-bottom border-dark">
+                        ${(+data.basePrice).toFixed(2)}
                       </div>
                       <hr className="browse_hr_dark" />
                       <div
@@ -123,16 +139,72 @@ export class Browse extends Component {
     };
     return (
       <div>
-        <div id="browse_container" className="row rounded border border-dark">
-          <div className="col-6 w-100 my-4">
-            <InputUtility />
-          </div>
+        <div id="browse_container" className="row rounded border border-dark ">
+          <div className="row col-12 align-items-center my-4">
+            <div className="col-6">
+              <InputUtility />
+            </div>
+            <div className="col-1">
+              <Dropdown
+                direction="right"
+                isOpen={this.state.dropdownOpen}
+                toggle={this.toggle}
+              >
+                <DropdownToggle caret>Filters</DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem className="row">
+                    <div className="col-12">
+                      <FontAwesomeIcon
+                        onClick={this.handleFilterAlphaUp}
+                        className="text-primary mr-3 "
+                        icon={["fas", "sort-alpha-up"]}
+                      />
+                      <FontAwesomeIcon
+                        onClick={this.handleFilterPriceDown}
+                        className="text-primary mr-3 "
+                        icon={["fas", "sort-numeric-up"]}
+                      />
+                      <FontAwesomeIcon
+                        onClick={this.handleFilter}
+                        className="text-primary mr-3 "
+                        icon={["fas", "sort-amount-up"]}
+                      />
+                    </div>
+                    <hr className="m-1" />
 
+                    <div className="col-12">
+                      <FontAwesomeIcon
+                        onClick={this.handleFilter}
+                        className="text-primary mr-3 "
+                        icon={["fas", "sort-alpha-down"]}
+                      />
+                      <FontAwesomeIcon
+                        onClick={this.handleFilter}
+                        className="text-primary mr-3 "
+                        icon={["fas", "sort-numeric-down"]}
+                      />
+                      <FontAwesomeIcon
+                        onClick={this.handleFilter}
+                        className="text-primary mr-3 "
+                        icon={["fas", "sort-amount-down"]}
+                      />
+                    </div>
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          </div>
           <div className="col-12">
             <div className="row">
               {/* <div className={browseColumnStyle()} /> */}
               {renderCards()}
             </div>
+          </div>
+          <div className="col-4 m-auto">
+            <Pagination
+              pages={_.chunk(this.props.apiSearchResponse, 8)}
+              handlePageClick={this.handlePageClick}
+            />
           </div>
         </div>
       </div>

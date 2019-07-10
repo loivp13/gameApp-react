@@ -24,6 +24,9 @@ class InputUtility extends React.Component {
         onSubmit={() => {
           this.handleSearchClick(term);
         }}
+        onBlur={() => {
+          this.handleSearchClick(this.state.searchTerm);
+        }}
         className="border border-dark rounded"
       >
         <InputGroupAddon addonType="prepend">

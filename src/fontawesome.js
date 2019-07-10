@@ -13,7 +13,16 @@ import {
   faMoneyBill,
   faSearch,
   faPlus,
-  faMinus
+  faMinus,
+  faBars,
+  faLongArrowAltRight,
+  faLongArrowAltLeft,
+  faSortAlphaUp,
+  faSortAlphaDown,
+  faSortNumericUp,
+  faSortNumericDown,
+  faSortAmountUp,
+  faSortAmountDown
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -38,6 +47,15 @@ library.add(
   faSearch,
   faTimesCircle,
   faPlus,
-  faMinus
+  faMinus,
+  faBars,
+  faLongArrowAltRight,
+  faLongArrowAltLeft,
+  faSortAlphaUp,
+  faSortAlphaDown,
+  faSortNumericUp,
+  faSortNumericDown,
+  faSortAmountUp,
+  faSortAmountDown
   // more icons go here
 );

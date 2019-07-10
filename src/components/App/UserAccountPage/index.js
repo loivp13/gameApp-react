@@ -6,8 +6,7 @@ import { selectShowPage, searchTerm } from "../redux/actions";
 import Browse from "./ShowPage/Browse";
 import Sell from "./ShowPage/Sell";
 import WishList from "./ShowPage/WishList";
-import Trade from "./ShowPage/Trade";
-import Setting from "./ShowPage/Setting";
+import ListedItems from "./ShowPage/ListedItems";
 import Cart from "./ShowPage/Cart";
 
 export class UserAccount extends Component {
@@ -20,13 +19,7 @@ export class UserAccount extends Component {
 
     this.toggle = this.toggle.bind(this);
   }
-
-  componentWillMount() {
-    localStorage.clear();
-  }
   componentDidMount() {
-    localStorage.clear();
-
     if (this.props.apiSearchResponse.length === 0) {
       this.props.searchTerm("smash");
     }
@@ -39,8 +32,8 @@ export class UserAccount extends Component {
   render() {
     const openIcon = () => {
       return (
-        <div className="btn">
-          <FontAwesomeIcon icon={["fas", "expand-arrows-alt"]} />
+        <div className="btn ml-auto">
+          <FontAwesomeIcon icon={["fas", "bars"]} />
         </div>
       );
     };
@@ -53,10 +46,8 @@ export class UserAccount extends Component {
           return <Sell />;
         case "Wish List":
           return <WishList collapse={this.state.collapse} />;
-        case "Trade":
-          return <Trade />;
-        case "Setting":
-          return <Setting />;
+        case "Listed Items":
+          return <ListedItems collapse={this.state.collapse} />;
         case "Cart":
           return <Cart collapse={this.state.collapse} />;
         default:
@@ -67,15 +58,16 @@ export class UserAccount extends Component {
     //if true take up more space else less space
     const BasicCollapseStyle = this.state.collapse
       ? "col-12 col-md-4 "
-      : "col-3 col-md-2";
+      : "col-1 ";
     const ShowStyle = this.state.collapse
       ? "col-10 col-md-7 "
       : "col-10 col-lg-10";
     return (
       <div className="main_container">
         <div className="row justify-content-around">
-          <div id="basicCollapse" className={BasicCollapseStyle}>
+          <div id="basicCollapse" className={`${BasicCollapseStyle}`}>
             <BasicCollapse
+              className="position-fixed"
               username={this.state.username}
               buttonIcon={openIcon}
               onToggle={this.toggle}
