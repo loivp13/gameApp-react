@@ -29,7 +29,8 @@ import {
   faGitSquare,
   faLinkedin,
   faFacebook,
-  faGoogle
+  faGoogle,
+  faCodepen
 } from "@fortawesome/free-brands-svg-icons";
 
 library.add(
@@ -56,6 +57,7 @@ library.add(
   faSortNumericUp,
   faSortNumericDown,
   faSortAmountUp,
-  faSortAmountDown
+  faSortAmountDown,
+  faCodepen
   // more icons go here
 );

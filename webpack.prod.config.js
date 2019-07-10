@@ -3,8 +3,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const NodemonPlugin = require("nodemon-webpack-plugin");
-import moduleName from "dotenv-webpack";
 
 module.exports = {
   entry: {
@@ -71,8 +69,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    }),
-    new NodemonPlugin(),
-    new Dotenv()
+    })
   ]
 };

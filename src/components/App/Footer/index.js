@@ -38,10 +38,10 @@ export class Footer extends Component {
           </Link>
         </div>
         <div className="col-1">
-          <Link to="/facebook">
+          <Link to="/codesandbox">
             <FontAwesomeIcon
               className="text-white grow"
-              icon={["fab", "facebook"]}
+              icon={["fab", "codepen"]}
               size="lg"
             />
           </Link>

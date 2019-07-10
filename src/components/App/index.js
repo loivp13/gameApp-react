@@ -43,9 +43,9 @@ export class App extends Component {
               }}
             />
             <Route
-              path="/facebook"
+              path="/codesandbox"
               component={() => {
-                window.location = "https://www.facebook.com/loi.pham.12";
+                window.location = "https://codesandbox.io/u/loivp13/sandboxes";
                 return null;
               }}
             />

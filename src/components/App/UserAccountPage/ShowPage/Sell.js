@@ -25,12 +25,12 @@ export class Sell extends Component {
       searchTitle: "testing",
       page: 0,
       selectedGameIndex: 1,
-      game: null
+      game: null,
+      ordered: false
     };
   }
-
-  componentDidMount() {
-    this.setState({ location: "springfield" });
+  componentWillUnmount() {
+    this.setState({ ordered: false });
   }
 
   onSellClick = e => {
@@ -39,6 +39,7 @@ export class Sell extends Component {
       return;
     } else {
       this.props.addToListed(this.state.game, this.props.Trade.values.price);
+      this.setState({ ordered: true });
     }
   };
 
@@ -127,7 +128,7 @@ export class Sell extends Component {
                 onClick={() => {
                   this.handleSelectedItemClick(index, item);
                 }}
-                className="col-4"
+                className="col-3"
               >
                 <img
                   className={`${selectedStyle()}  pb-1 `}
@@ -145,8 +146,8 @@ export class Sell extends Component {
       );
     };
 
-    return (
-      <div className="container col-xs-9 col-md-9 Sell_Form_Border p-1 mt-3 mb-3 rounded">
+    let renderSellPage = () => {
+      return !this.state.ordered ? (
         <Form
           id="Sell_Cards_Color "
           className="m-5"
@@ -196,10 +197,12 @@ export class Sell extends Component {
                 icon={["fas", "long-arrow-alt-right"]}
               />
             </div>
-            <div className="row align-items-center justify-content-between mt-3">
+            <div className="row col-12 align-items-center justify-content-center mt-3">
               {renderCards()}
             </div>
-            <div className="Sell_Selected_Game">{renderSelectText()}</div>
+            <div className="row col-5 Sell_Selected_Game justify-content-center">
+              {renderSelectText()}
+            </div>
           </Row>
           <Row className="justify-content-center mt-3">
             <Button className="btn btn-success btn-lg ml-auto mr-auto">
@@ -208,6 +211,16 @@ export class Sell extends Component {
             </Button>
           </Row>
         </Form>
+      ) : (
+        <div className="text-white">
+          Order has been placed! Thank you for using GameDeals!
+        </div>
+      );
+    };
+
+    return (
+      <div className="container col-12 Sell_Form_Border p-1 mt-3 mb-3 rounded">
+        {renderSellPage()}
       </div>
     );
   }
