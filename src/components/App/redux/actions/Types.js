@@ -22,5 +22,9 @@ export const Types = {
   PlaceOrder: "PlaceOrder",
   SearchSellTitle: "SearchSellTitle",
   AddtoListed: " AddtoListed",
-  RemoveFromListed: "RemoveFromListed"
+  RemoveFromListed: "RemoveFromListed",
+  FilterPriceUp: "FilterPriceUp",
+  FilterPriceDown: "FilterPriceDown",
+  FilterAlphaUp: "FilterAlphaUp",
+  FilterAlphaDown: "FilterAlphaDown"
 };

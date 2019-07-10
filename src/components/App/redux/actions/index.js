@@ -147,3 +147,24 @@ export const RemoveFromListed = (data, index) => {
     payload: { data, index }
   };
 };
+
+export const handleFilterAlphaUp = () => {
+  return {
+    type: Types.FilterAlphaUp
+  };
+};
+export const handleFilterAlphaDown = () => {
+  return {
+    type: Types.FilterAlphaDown
+  };
+};
+export const handleFilterPriceUp = () => {
+  return {
+    type: Types.FilterPriceUp
+  };
+};
+export const handleFilterPriceDown = () => {
+  return {
+    type: Types.FilterPriceDown
+  };
+};

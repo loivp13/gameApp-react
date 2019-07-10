@@ -21,7 +21,14 @@ import {
   DropdownItem
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { addToWishList, addToCart } from "../../redux/actions";
+import {
+  addToWishList,
+  addToCart,
+  handleFilterAlphaDown,
+  handleFilterAlphaUp,
+  handleFilterPriceDown,
+  handleFilterPriceUp
+} from "../../redux/actions";
 import { withRouter } from "react-router-dom";
 import _ from "lodash";
 import Pagination from "../Pagination";
@@ -66,6 +73,19 @@ export class Browse extends Component {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
     });
+  };
+
+  handleFilterAlphaDown = () => {
+    this.props.handleFilterAlphaDown();
+  };
+  handleFilterAlphaUp = () => {
+    this.props.handleFilterAlphaUp();
+  };
+  handleFilterPriceDown = () => {
+    this.props.handleFilterPriceDown();
+  };
+  handleFilterPriceUp = () => {
+    this.props.handleFilterPriceUp();
   };
   render() {
     const browseColumnStyle = () => {
@@ -152,42 +172,46 @@ export class Browse extends Component {
               >
                 <DropdownToggle caret>Filters</DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem className="row">
-                    <div className="col-12">
+                  <DropdownItem
+                    onClick={this.handleFilterAlphaDown}
+                    className=""
+                  >
+                    <div className="">
                       <FontAwesomeIcon
-                        onClick={this.handleFilterAlphaUp}
-                        className="text-primary mr-3 "
+                        className="text-primary mr-4 "
+                        icon={["fas", "sort-alpha-down"]}
+                      />{" "}
+                      Alphabetize in order
+                    </div>
+                  </DropdownItem>
+                  <DropdownItem onClick={this.handleFilterAlphaUp} className="">
+                    <div className="">
+                      <FontAwesomeIcon
+                        className="text-primary mr-4 "
                         icon={["fas", "sort-alpha-up"]}
                       />
-                      <FontAwesomeIcon
-                        onClick={this.handleFilterPriceDown}
-                        className="text-primary mr-3 "
-                        icon={["fas", "sort-numeric-up"]}
-                      />
-                      <FontAwesomeIcon
-                        onClick={this.handleFilter}
-                        className="text-primary mr-3 "
-                        icon={["fas", "sort-amount-up"]}
-                      />
+                      Alphabetize in reverse
                     </div>
-                    <hr className="m-1" />
-
-                    <div className="col-12">
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.handleFilterPriceDown}
+                    className=""
+                  >
+                    <div className="">
                       <FontAwesomeIcon
-                        onClick={this.handleFilter}
-                        className="text-primary mr-3 "
-                        icon={["fas", "sort-alpha-down"]}
-                      />
-                      <FontAwesomeIcon
-                        onClick={this.handleFilter}
-                        className="text-primary mr-3 "
+                        className="text-primary mr-4 "
                         icon={["fas", "sort-numeric-down"]}
-                      />
+                      />{" "}
+                      Pricing Low to High
+                    </div>
+                  </DropdownItem>
+                  <DropdownItem onClick={this.handleFilterPriceUp} className="">
+                    <div className="">
                       <FontAwesomeIcon
-                        onClick={this.handleFilter}
-                        className="text-primary mr-3 "
-                        icon={["fas", "sort-amount-down"]}
-                      />
+                        className="text-primary mr-4 "
+                        icon={["fas", "sort-numeric-up"]}
+                      />{" "}
+                      Pricing High to Low
                     </div>
                   </DropdownItem>
                 </DropdownMenu>
@@ -221,6 +245,13 @@ const mapStateToProps = (state, ownProps) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { addToWishList, addToCart }
+    {
+      addToWishList,
+      addToCart,
+      handleFilterAlphaUp,
+      handleFilterAlphaDown,
+      handleFilterPriceUp,
+      handleFilterPriceDown
+    }
   )(Browse)
 );
