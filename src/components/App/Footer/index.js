@@ -17,6 +17,17 @@ export class Footer extends Component {
   };
 
   render() {
+    let renderPurgeButton = () => {
+      process.env.API_URL === "dev" ? (
+        <div className="col-1">
+          <button onClick={this.purgeState} className="btn-danger">
+            purge
+          </button>
+        </div>
+      ) : (
+        []
+      );
+    };
     return (
       <div className="row justify-content-center mb-5 " id="footer">
         <div className="col-1">
@@ -45,11 +56,6 @@ export class Footer extends Component {
               size="lg"
             />
           </Link>
-        </div>
-        <div className="col-1">
-          <button onClick={this.purgeState} className="btn-danger">
-            purge
-          </button>
         </div>
       </div>
     );

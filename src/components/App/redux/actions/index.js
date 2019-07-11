@@ -68,10 +68,7 @@ export const signInLocal = (formValue, history, toggleModal) => async (
     }
   });
 };
-export const signUpLocal = (formValue, history) => async (
-  dispatch,
-  getState
-) => {
+export const signUpLocal = formValue => async (dispatch, getState) => {
   await axios.post("/authLocal/signup", formValue).then(res => {
     console.log(res.data);
     if (res.status !== 200) {
@@ -79,9 +76,8 @@ export const signUpLocal = (formValue, history) => async (
     } else if (res.data.error) {
       dispatch({ type: Types.TiggerErrorMessage, payload: res.data.error });
     } else {
-      dispatch({ type: Types.SignInLocal, payload: req.data });
+      dispatch({ type: Types.SignInLocal, payload: res.data });
       dispatch({ type: Types.TiggerErrorMessage, payload: {} });
-      history.push("./userAccount");
     }
   });
 };

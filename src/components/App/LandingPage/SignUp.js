@@ -45,7 +45,8 @@ export class SignUp extends React.Component {
   }
 
   onSubmit = formValues => {
-    this.props.signUpLocal(formValues, history);
+    this.props.signUpLocal(formValues);
+    this.props.history.push("/userAccount");
   };
   render() {
     const modal = () => {

@@ -212,9 +212,7 @@ export class Sell extends Component {
           </Row>
         </Form>
       ) : (
-        <div className="text-white">
-          Order has been placed! Thank you for using GameDeals!
-        </div>
+        <div className="text-white">YItem listed!</div>
       );
     };
 
