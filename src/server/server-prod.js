@@ -4,7 +4,7 @@ import express from "express";
 const authLocalRoute = require("./routes/authLocal.js");
 const userRoute = require("./routes//userRoute.js");
 
-import historyApiFallback from "connect-history-api-fallback";
+const historyApiFallback = require("connect-history-api-fallback");
 const passport = require("passport");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
