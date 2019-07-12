@@ -22,7 +22,6 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  addToWishList,
   addToCart,
   handleFilterAlphaDown,
   handleFilterAlphaUp,
@@ -246,7 +245,6 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      addToWishList,
       addToCart,
       handleFilterAlphaUp,
       handleFilterAlphaDown,

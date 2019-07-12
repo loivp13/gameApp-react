@@ -12,8 +12,6 @@ export default (state = INTIAL_STATE, action) => {
       return { ...state, isSignedIn: true, userId: action.payload };
     case Types.SignOut:
       return { ...state, isSignedIn: false, userId: null };
-    case Types.AuthObject:
-      return { ...state, authObject: action.payload };
     default:
       return state;
   }
