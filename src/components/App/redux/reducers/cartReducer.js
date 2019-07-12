@@ -1,4 +1,4 @@
-import { Types } from "../actions/types";
+import { Types } from "../actions/Types";
 
 const INTIAL_STATE = JSON.parse(localStorage.getItem("cart")) || {
   items: [],

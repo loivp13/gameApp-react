@@ -1,4 +1,4 @@
-import { Types } from "../actions/types";
+import { Types } from "../actions/Types";
 import { log } from "util";
 
 const INTIAL_STATE = {
