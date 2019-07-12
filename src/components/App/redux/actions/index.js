@@ -10,7 +10,7 @@ export const selectShowPage = page => {
 
 export const searchSellTitle = term => async dispatch => {
   let response = await axios({
-    url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
+    url: "/games",
     method: "POST",
     headers: {
       ["user-key"]: API_KEY.igdb
@@ -24,7 +24,7 @@ export const searchSellTitle = term => async dispatch => {
 };
 export const searchTerm = term => async dispatch => {
   let response = await axios({
-    url: process.env.API_URL === "dev" ? "/games" : "https://api-v3.igdb.com",
+    url: "/games",
     method: "POST",
     headers: {
       ["user-key"]: API_KEY.igdb
@@ -68,7 +68,10 @@ export const signInLocal = (formValue, history, toggleModal) => async (
     }
   });
 };
-export const signUpLocal = formValue => async (dispatch, getState) => {
+export const signUpLocal = (formValue, history) => async (
+  dispatch,
+  getState
+) => {
   await axios.post("/authLocal/signup", formValue).then(res => {
     console.log(res.data);
     if (res.status !== 200) {
@@ -78,6 +81,7 @@ export const signUpLocal = formValue => async (dispatch, getState) => {
     } else {
       dispatch({ type: Types.SignInLocal, payload: res.data });
       dispatch({ type: Types.TiggerErrorMessage, payload: {} });
+      history.push("/userAccount");
     }
   });
 };

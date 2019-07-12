@@ -28,12 +28,6 @@ export class SignUp extends React.Component {
     );
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.forceUpdate();
-    }
-  }
-
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -45,8 +39,7 @@ export class SignUp extends React.Component {
   }
 
   onSubmit = formValues => {
-    this.props.signUpLocal(formValues);
-    this.props.history.push("/userAccount");
+    this.props.signUpLocal(formValues, this.props.history);
   };
   render() {
     const modal = () => {
