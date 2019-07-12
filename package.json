@@ -11,7 +11,8 @@
     "start": "node ./dist/server.js",
     "nodemon": "nodemon --ignore ./src --ignore ./node_modules ./dist/server.js",
     "startAll": "npm-run-all -p nodemon watch-webpack.config",
-    "watch-webpack.config": "webpack --watch --mode development --config webpack.server.config.js"
+    "watch-webpack.config": "webpack --watch --mode development --config webpack.server.config.js",
+    "heroku-postbuild": "rm -rf dist && webpack --mode production  --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js"
   },
   "repository": "https://github.com/bengrunfeld/rexpack",
   "keywords": [],
