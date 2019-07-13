@@ -61,6 +61,36 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    noInfo: true,
+    historyApiFallback: true,
+    proxy: {
+      "/search": {
+        target: "https://api-v3.igdb.com",
+        ws: false,
+        changeOrigin: true,
+        logLevel: "debug",
+        onProxyRes: function(proxyRes, req, res) {
+          proxyRes.headers["Allow-Access-Control-Origin"] = "*";
+        },
+        onProxyReq: function(proxyReq, req, res) {
+          proxyReq.setHeader("Allow-Access-Control-Origin", "*");
+        }
+      },
+      "/games": {
+        target: "https://api-v3.igdb.com",
+        ws: false,
+        changeOrigin: true,
+        logLevel: "debug",
+        onProxyRes: function(proxyRes, req, res) {
+          proxyRes.headers["Allow-Access-Control-Origin"] = "*";
+        },
+        onProxyReq: function(proxyReq, req, res) {
+          proxyReq.setHeader("Allow-Access-Control-Origin", "*");
+        }
+      }
+    }
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/html/index.html",

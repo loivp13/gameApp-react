@@ -1,5 +1,6 @@
 import path from "path";
 import express from "express";
+import config from "../../webpack.dev.config.js";
 
 const authLocalRoute = require("./routes/authLocal.js");
 const userRoute = require("./routes//userRoute.js");
@@ -12,10 +13,11 @@ const session = require("express-session");
 const validator = require("express-validator");
 const logger = require("morgan");
 const flash = require("connect-flash");
+const cors = require("cors");
 const app = express(),
   DIST_DIR = __dirname,
-  HTML_FILE = path.join(DIST_DIR, "index.html");
-const cors = require("cors");
+  HTML_FILE = path.join(DIST_DIR, "index.html"),
+  devServerProxy = config.devServer.proxy;
 
 const mongoDB =
   "mongodb://masterveloute:Heyheyhey3@ds131747.mlab.com:31747/gameapp_react";
@@ -57,6 +59,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+if (devServerProxy) {
+  Object.keys(devServerProxy).forEach(context => {
+    return app.use(proxy(context, devServerProxy[context]));
+  });
+}
 //express routes
 app.use("/authLocal", authLocalRoute);
 app.use("/user", userRoute);
