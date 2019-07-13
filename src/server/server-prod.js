@@ -1,6 +1,6 @@
 import path from "path";
 import express from "express";
-import config from "../../webpack.dev.config.js";
+import config from "../../webpack.prod.config";
 import proxy from "http-proxy-middleware";
 
 const authLocalRoute = require("./routes/authLocal.js");
@@ -17,7 +17,7 @@ const cors = require("cors");
 const app = express(),
   DIST_DIR = __dirname,
   HTML_FILE = path.join(DIST_DIR, "index.html"),
-  devServerProxy = config.devServer.proxy;
+  // devServerProxy = config.devServer.proxy;
 
 const mongoDB =
   "mongodb://masterveloute:Heyheyhey3@ds131747.mlab.com:31747/gameapp_react";
@@ -63,11 +63,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-if (devServerProxy) {
-  Object.keys(devServerProxy).forEach(context => {
-    return app.use(proxy(context, devServerProxy[context]));
-  });
-}
+// if (devServerProxy) {
+//   Object.keys(devServerProxy).forEach(context => {
+//     return app.use(proxy(context, devServerProxy[context]));
+//   });
+// }
 //express routes
 app.use("/authLocal", authLocalRoute);
 app.use("/user", userRoute);
