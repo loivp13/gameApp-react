@@ -1,6 +1,5 @@
 import path from "path";
 import express from "express";
-import config from "../../webpack.prod.config";
 import proxy from "http-proxy-middleware";
 
 const authLocalRoute = require("./routes/authLocal.js");
