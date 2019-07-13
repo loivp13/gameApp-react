@@ -212,7 +212,7 @@ export class Sell extends Component {
           </Row>
         </Form>
       ) : (
-        <div className="text-white">YItem listed!</div>
+        <div className="text-white">Item listed!</div>
       );
     };
 
