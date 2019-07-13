@@ -78,11 +78,6 @@ app.use(
     }
   })
 );
-app.use(
-  historyApiFallback({
-    verbose: false
-  })
-);
 // use passport
 app.use(passport.initialize());
 app.use(passport.session());
