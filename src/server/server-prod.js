@@ -16,7 +16,33 @@ const flash = require("connect-flash");
 const cors = require("cors");
 const app = express(),
   DIST_DIR = __dirname,
-  HTML_FILE = path.join(DIST_DIR, "index.html");
+  HTML_FILE = path.join(DIST_DIR, "index.html"),
+  devServerProxy = {
+    "/search": {
+      target: "https://api-v3.igdb.com",
+      ws: false,
+      changeOrigin: true,
+      logLevel: "debug",
+      onProxyRes: function(proxyRes, req, res) {
+        proxyRes.headers["Allow-Access-Control-Origin"] = "*";
+      },
+      onProxyReq: function(proxyReq, req, res) {
+        proxyReq.setHeader("Allow-Access-Control-Origin", "*");
+      }
+    },
+    "/games": {
+      target: "https://api-v3.igdb.com",
+      ws: false,
+      changeOrigin: true,
+      logLevel: "debug",
+      onProxyRes: function(proxyRes, req, res) {
+        proxyRes.headers["Allow-Access-Control-Origin"] = "*";
+      },
+      onProxyReq: function(proxyReq, req, res) {
+        proxyReq.setHeader("Allow-Access-Control-Origin", "*");
+      }
+    }
+  };
 
 const mongoDB =
   "mongodb://masterveloute:Heyheyhey3@ds131747.mlab.com:31747/gameapp_react";
@@ -62,11 +88,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// if (devServerProxy) {
-//   Object.keys(devServerProxy).forEach(context => {
-//     return app.use(proxy(context, devServerProxy[context]));
-//   });
-// }
+if (devServerProxy) {
+  Object.keys(devServerProxy).forEach(context => {
+    return app.use(proxy(context, devServerProxy[context]));
+  });
+}
 //express routes
 app.use("/authLocal", authLocalRoute);
 app.use("/user", userRoute);
