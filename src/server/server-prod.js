@@ -1,10 +1,10 @@
 import path from "path";
 import express from "express";
 import config from "../../webpack.dev.config.js";
+import proxy from "http-proxy-middleware";
 
 const authLocalRoute = require("./routes/authLocal.js");
 const userRoute = require("./routes//userRoute.js");
-
 const passport = require("passport");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -54,7 +54,11 @@ app.use(
     }
   })
 );
-
+app.use(
+  historyApiFallback({
+    verbose: false
+  })
+);
 // use passport
 app.use(passport.initialize());
 app.use(passport.session());
