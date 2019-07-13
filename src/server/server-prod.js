@@ -16,8 +16,7 @@ const flash = require("connect-flash");
 const cors = require("cors");
 const app = express(),
   DIST_DIR = __dirname,
-  HTML_FILE = path.join(DIST_DIR, "index.html"),
-  // devServerProxy = config.devServer.proxy;
+  HTML_FILE = path.join(DIST_DIR, "index.html");
 
 const mongoDB =
   "mongodb://masterveloute:Heyheyhey3@ds131747.mlab.com:31747/gameapp_react";
