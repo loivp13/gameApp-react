@@ -16,7 +16,6 @@ const app = express(),
   DIST_DIR = __dirname,
   HTML_FILE = path.join(DIST_DIR, "index.html");
 const cors = require("cors");
-const historyApiFallback = require("connect-history-api-fallback");
 
 const mongoDB =
   "mongodb://masterveloute:Heyheyhey3@ds131747.mlab.com:31747/gameapp_react";
@@ -53,11 +52,7 @@ app.use(
     }
   })
 );
-app.use(
-  historyApiFallback({
-    verbose: false
-  })
-);
+
 // use passport
 app.use(passport.initialize());
 app.use(passport.session());
