@@ -135,7 +135,7 @@ export class SignUp extends React.Component {
           <div className="signUp_text_OR col-23text-center">OR</div>
           <div
             onClick={this.handleGuestSignin}
-            className="col-4 signUp_text_guest"
+            className="col-4 signUp_text_guest restart"
           >
             Guest Pass
           </div>
