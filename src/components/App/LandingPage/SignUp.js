@@ -123,7 +123,7 @@ export class SignUp extends React.Component {
             </FormGroup>
           </Col>
         </Row>
-        <div className="row align-items-center justify-content-center">
+        <div className="signup_Buttons row align-items-center justify-content-center">
           <div className="col-3">
             <div
               onClick={this.props.handleSubmit(this.onSubmit)}
@@ -132,7 +132,7 @@ export class SignUp extends React.Component {
               Sign up
             </div>
           </div>
-          <div className="signUp_text_OR col-23text-center">OR</div>
+          <div className="signUp_text_OR col-1 mr-4 text-center">OR</div>
           <div
             onClick={this.handleGuestSignin}
             className="col-4 signUp_text_guest restart"

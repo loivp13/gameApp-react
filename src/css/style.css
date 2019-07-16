@@ -83,3 +83,7 @@ body {
   font-size: 1.3em;
   cursor: pointer;
 }
+
+.signup_Buttons {
+  min-height: 40px;
+}
