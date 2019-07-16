@@ -26,5 +26,6 @@ export const Types = {
   FilterPriceUp: "FilterPriceUp",
   FilterPriceDown: "FilterPriceDown",
   FilterAlphaUp: "FilterAlphaUp",
-  FilterAlphaDown: "FilterAlphaDown"
+  FilterAlphaDown: "FilterAlphaDown",
+  GuestSignin: "GuestSignin"
 };

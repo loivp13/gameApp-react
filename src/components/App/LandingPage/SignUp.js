@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { signUpLocal, signOutLocal } from "../redux/actions";
+import { signUpLocal, signOutLocal, handleGuestSignin } from "../redux/actions";
 import { withRouter } from "react-router-dom";
 
 export class SignUp extends React.Component {
@@ -41,6 +41,12 @@ export class SignUp extends React.Component {
   onSubmit = formValues => {
     this.props.signUpLocal(formValues, this.props.history);
   };
+
+  handleGuestSignin = () => {
+    this.props.handleGuestSignin();
+    this.props.history.push("userAccount");
+  };
+
   render() {
     const modal = () => {
       return (
@@ -117,21 +123,30 @@ export class SignUp extends React.Component {
             </FormGroup>
           </Col>
         </Row>
-        <div className="row">
-          <div className="pr-5 pl-2">
-            <Button className="btn btn-danger grow"> Sign Up</Button>
+        <div className="row align-items-center justify-content-center">
+          <div className="col-3">
+            <div
+              onClick={this.props.handleSubmit(this.onSubmit)}
+              className="signUp_Button text-align-center"
+            >
+              Sign up
+            </div>
           </div>
-          <div className="row pt-2 pl-3">
-            <div>Sign up with</div>
+          <div className="signUp_text_OR col-23text-center">OR</div>
+          <div
+            onClick={this.handleGuestSignin}
+            className="col-4 signUp_text_guest"
+          >
+            Guest Pass
           </div>
-          <div className="row pl-3">
-            <p className="pt-3 mb-0 pl-3">Already have an account?</p>
-            <ModalSignIn
-              className="pt-3"
-              buttonLabel="SignIn"
-              buttonColor="text-danger"
-            />
-          </div>
+        </div>
+        <div className="row pl-3">
+          <p className="pt-3 mb-0 pl-3">Already have an account?</p>
+          <ModalSignIn
+            className="pt-3"
+            buttonLabel="SignIn"
+            buttonColor="text-danger"
+          />
         </div>
       </Form>
     );
@@ -176,7 +191,8 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      signUpLocal
+      signUpLocal,
+      handleGuestSignin
     }
   )(
     reduxForm({

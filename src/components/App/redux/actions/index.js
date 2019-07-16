@@ -86,6 +86,12 @@ export const signUpLocal = (formValue, history) => async (
   });
 };
 
+export const handleGuestSignin = () => {
+  return {
+    type: Types.GuestSignin
+  };
+};
+
 export const signOutLocal = () => {
   return {
     type: Types.SignOutLocal

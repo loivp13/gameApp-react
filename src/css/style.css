@@ -62,3 +62,24 @@ body {
   width: 8vw;
   height: 8vw;
 }
+
+.signUp_Button {
+  background-image: linear-gradient(to right, #d32f2f, #922929);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.signUp_Button:hover {
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.signUp_text_guest {
+  background-image: linear-gradient(to right, #3a9b5a, #61ca31);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.signUp_text_guest:hover {
+  font-size: 1.3em;
+  cursor: pointer;
+}
