@@ -37,7 +37,7 @@
     "express-validator": "^5.3.1",
     "http-proxy-middleware": "^0.19.1",
     "igdb-api-node": "^3.1.7",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mongodb": "^3.2.6",
     "mongoose": "^5.5.12",
     "morgan": "^1.9.1",
